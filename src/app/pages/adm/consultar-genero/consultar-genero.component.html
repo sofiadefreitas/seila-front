@@ -1,0 +1,20 @@
+<h1>Gêneros</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let genero of generos">
+      <td>{{genero.id}}</td>
+      <td>{{genero.descricao}}</td>
+      <td>
+        <button (click)="editarGenero(genero)">Editar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

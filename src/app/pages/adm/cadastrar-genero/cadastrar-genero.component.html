@@ -1,0 +1,7 @@
+<h1>Cadastrar gênero</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>Descrição: <input formControlName="descricao"></label>
+  <br>
+  <button type="submit" [disabled]="form.invalid">Cadastrar</button>
+</form>
