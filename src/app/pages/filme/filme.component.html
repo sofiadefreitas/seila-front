@@ -1,1 +1,21 @@
-<p>filme works!</p>
+<div class="container mt-4">
+
+  <div *ngFor="let genero of generos" class="mb-5">
+
+    <h2>{{ genero.descricao }}</h2>
+
+    <div *ngIf="genero.filmes" class="row">
+
+      <div *ngFor="let filme of genero.filmes" class="col-md-3 mb-4">
+        <div class="card h-100">
+          <img [src]="filme.urlImagem" class="card-img-top" [alt]="filme.nome">
+          <div class="card-body">
+            <h5 class="card-title">{{ filme.nome }}</h5>
+            <a [routerLink]="['/filmes', filme.id]" class="btn btn-primary">Ver detalhes</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
