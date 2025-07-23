@@ -3,6 +3,6 @@ export class Filme {
   nome!: string;
   sinopse?: string;
   tags?: string;
-  urlVideo?: string;
-  urlImagem?: string;
+  urlVideo!: string;
+  urlImagem!: string;
 }

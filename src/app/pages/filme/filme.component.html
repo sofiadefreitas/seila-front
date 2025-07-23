@@ -3,7 +3,7 @@
   <div *ngFor="let genero of generos" class="mb-5">
 
     <h2>{{ genero.descricao }}</h2>
-
+    <hr>
     <div *ngIf="genero.filmes" class="row">
 
       <div *ngFor="let filme of genero.filmes" class="col-md-3 mb-4">

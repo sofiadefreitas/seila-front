@@ -1,4 +1,8 @@
+import {Filme} from "./filme";
+import {Genero} from "./genero";
+
 export class FilmeGenero {
-  idFilme!: number;
-  idGenero!: number;
+  id!: number;
+  filme!: Filme;
+  genero!: Genero;
 }

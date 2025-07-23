@@ -4,6 +4,7 @@ import {FilmeService} from "../../services/filme.service";
 import {GeneroService} from "../../services/genero.service";
 import {Router, RouterLink} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
+import {Filme} from "../../models/filme";
 
 @Component({
   selector: 'app-filme',
@@ -26,10 +27,12 @@ export class FilmeComponent {
     this.generoService.listar().subscribe(
       generosApi => {
         this.generos = generosApi;
-        this.generos.forEach(genero => {
+        this.generos.forEach(
+          genero => {
           this.filmeService.getByGeneroId(genero.id!).subscribe(
-            filmesDoGenero => {
-              genero.filmes = filmesDoGenero;
+            filmesGenero => {
+              const filmes: Filme[] = filmesGenero.map(filmeDoGenero => filmeDoGenero.filme);
+              genero.filmes = filmes;
             });
         });
       });

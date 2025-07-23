@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Filme} from "../models/filme";
+import {FilmeGenero} from "../models/filme-genero";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class FilmeService {
     return this.http.get<Filme>(`${this.apiUrl}/${id}`);
   }
 
-  getByGeneroId(idGenero: number): Observable<Filme[]> {
+  getByGeneroId(idGenero: number): Observable<FilmeGenero[]> {
     const url = `${this.apiGeneros}/${idGenero}/filmes`;
-    return this.http.get<Filme[]>(url);
+    return this.http.get<FilmeGenero[]>(url);
   }
 }
