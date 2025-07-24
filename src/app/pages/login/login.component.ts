@@ -27,7 +27,7 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    this.loginService.limparToken()
+    this.loginService.sair()
   }
 
   onSubmit(): void {
@@ -35,7 +35,7 @@ export class LoginComponent {
       this.mensagemDados = true;
       const formValue = this.formGroup.value;
 
-      this.loginService.autenticar(formValue.login, formValue.senha).subscribe({
+      this.loginService.entrar(formValue.login, formValue.senha).subscribe({
         next: (resposta) => {
           this.token = resposta;
           this.loginService.salvarToken(this.token.accessToken);

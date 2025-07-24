@@ -23,12 +23,10 @@ export class ClienteService {
   }
 
   salvar(cliente: Cliente): Observable<Cliente> {
-    if (cliente.id) {
-      return this.http.put<Cliente>(`${this.apiUrl}/${cliente.id}`, cliente);
-    }
-    else {
-      return this.http.post<Cliente>(this.apiUrl, cliente);
-    }
+    return this.http.post<Cliente>(this.apiUrl,
+                                    {...cliente,
+                                      nivelAcesso: 'CLIENTE'});
+    // ...cliente copia todos os atributos do objeto cliente, mas é preciso adicionar o nivel (que não existe no front)
   }
 
 }

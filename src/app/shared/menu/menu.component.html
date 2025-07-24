@@ -1,4 +1,40 @@
-<nav>
-  <a routerLink="">Início</a>
-  <a routerLink="/minha-conta">Minha conta</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">SEILA</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/filmes">Filmes</a>
+        </li>
+
+
+        <li *ngFor="let item of menuUsuario" class="nav-item">
+          <a class="nav-link" [routerLink]="item.rota">{{ item.descricao }}</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
+        <ng-container *ngIf="nomeUsuario">
+
+          <li class="nav-item">
+            <span class="navbar-text">Olá, {{ nomeUsuario }}</span>
+          </li>
+
+          <li class="nav-item">
+            <!-- Usamos uma tag <a> para manter o estilo, mas com um evento (click) em vez de um link de rota -->
+            <a class="nav-link" style="cursor: pointer;" (click)="sair()">Sair</a>
+          </li>
+        </ng-container>
+
+        <li *ngIf="!nomeUsuario" class="nav-item"> <!-- Mostra o botão Login SE o usuário NÃO estiver logado -->
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>

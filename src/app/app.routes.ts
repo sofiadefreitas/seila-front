@@ -10,14 +10,26 @@ import {FilmeComponent} from "./pages/filme/filme.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
+
   { path: 'generos', component: ConsultarGeneroComponent},
-  { path: 'generos/:id', component: ConsultarGeneroComponent},
+
   { path: 'planos', component: PlanoComponent},
-  { path: 'planos/:id', component: PlanoComponent},
+
   { path: 'clientes', component: ClienteConsultaComponent},
-  { path: 'clientes/:id', component: ClienteConsultaComponent},
+//  { path: 'clientes/:id', component: ClienteConsultaComponent}, todo
   { path: 'cadastro-cliente', component: ClienteCadastroComponent},
+
   { path: 'login', component: LoginComponent},
+
   { path: 'filmes', component: FilmeComponent}
- // { path: 'minha-conta', component: }
+
+//  {path: 'historico'} todo
+
+// { path: assinatura todo
+
+// path   home do cliente todo
+
+   // path avaliacao todo
+
+ // { path: 'minha-conta', component: } todo
 ];

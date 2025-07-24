@@ -14,7 +14,7 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  autenticar(login: string, senha: string): Observable<Token> {
+  entrar(login: string, senha: string): Observable<Token> {
     const objetoJS = { login, senha };
     return this.http.post<Token>(this.apiUrl, objetoJS);
   }
@@ -27,7 +27,7 @@ export class LoginService {
     return localStorage.getItem("Token") || "";
   }
 
-  limparToken(): void {
+  sair(): void {
     localStorage.removeItem("Token");
   }
 
