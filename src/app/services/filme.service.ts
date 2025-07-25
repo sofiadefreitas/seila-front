@@ -21,8 +21,8 @@ export class FilmeService {
     return this.http.get<Filme>(`${this.apiUrl}/${id}`);
   }
 
-  getByGeneroId(idGenero: number): Observable<FilmeGenero[]> {
+  getByGeneroId(idGenero: number): Observable<Filme[]> {
     const url = `${this.apiGeneros}/${idGenero}/filmes`;
-    return this.http.get<FilmeGenero[]>(url);
+    return this.http.get<Filme[]>(url);
   }
 }

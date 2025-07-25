@@ -19,6 +19,7 @@ import {Filme} from "../../models/filme";
 })
 export class FilmeComponent {
   generos: Genero[] = [];
+  filmes: Filme[] = [];
 
   constructor(private filmeService: FilmeService, private generoService: GeneroService, private router: Router) {
   }
@@ -30,9 +31,8 @@ export class FilmeComponent {
         this.generos.forEach(
           genero => {
           this.filmeService.getByGeneroId(genero.id!).subscribe(
-            filmesGenero => {
-              const filmes: Filme[] = filmesGenero.map(filmeDoGenero => filmeDoGenero.filme);
-              genero.filmes = filmes;
+            resultado => {
+              this.filmes = resultado;
             });
         });
       });

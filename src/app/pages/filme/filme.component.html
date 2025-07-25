@@ -4,14 +4,14 @@
 
     <h2>{{ genero.descricao }}</h2>
     <hr>
-    <div *ngIf="genero.filmes" class="row">
+    <div *ngIf="filmes" class="row">
 
-      <div *ngFor="let filme of genero.filmes" class="col-md-3 mb-4">
+      <div *ngFor="let filme of filmes" class="col-md-3 mb-4">
         <div class="card h-100">
           <img [src]="filme.urlImagem" class="card-img-top" [alt]="filme.nome">
           <div class="card-body">
             <h5 class="card-title">{{ filme.nome }}</h5>
-            <a [routerLink]="['/filmes', filme.id]" class="btn btn-primary">Ver detalhes</a>
+<!--            <a [routerLink]="['/filmes', filme.id]" class="btn btn-primary">Ver detalhes</a>-->
           </div>
         </div>
 
