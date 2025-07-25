@@ -19,7 +19,8 @@ export class MenuComponent {
 
   menuCliente = [
     { descricao: 'Histórico', rota: 'historico'},
-    { descricao: 'Minha Conta', rota: 'minha-conta'}
+    { descricao: 'Avaliações', rota: 'avaliacoes'},
+    { descricao: 'Minha Conta', rota: 'minha-conta'},
   ];
 
   private subscription!: Subscription;

@@ -7,6 +7,9 @@ import {ClienteConsultaComponent} from "./pages/cliente-consulta/cliente-consult
 import {ClienteCadastroComponent} from "./pages/cliente-cadastro/cliente-cadastro.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {FilmeComponent} from "./pages/filme/filme.component";
+import {MinhaContaComponent} from "./pages/minha-conta/minha-conta.component";
+import {AvaliacaoComponent} from "./pages/avaliacao/avaliacao.component";
+import {HistoricoComponent} from "./pages/historico/historico.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,20 +19,17 @@ export const routes: Routes = [
   { path: 'planos', component: PlanoComponent},
 
   { path: 'clientes', component: ClienteConsultaComponent},
-//  { path: 'clientes/:id', component: ClienteConsultaComponent}, todo
-  { path: 'cadastro-cliente', component: ClienteCadastroComponent},
+
+  { path: 'cadastro', component: ClienteCadastroComponent},
 
   { path: 'login', component: LoginComponent},
 
-  { path: 'filmes', component: FilmeComponent}
+  { path: 'filmes', component: FilmeComponent},
 
-//  {path: 'historico'} todo
+  { path: 'minha-conta', component: MinhaContaComponent},
 
-// { path: assinatura todo
+  { path: 'historico', component: HistoricoComponent },
 
-// path   home do cliente todo
+  { path: 'avaliacoes', component: AvaliacaoComponent}
 
-   // path avaliacao todo
-
- // { path: 'minha-conta', component: } todo
 ];

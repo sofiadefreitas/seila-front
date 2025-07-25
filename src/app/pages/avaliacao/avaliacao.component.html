@@ -1,0 +1,32 @@
+
+<div class="container mt-4">
+  <h1>Minhas Avaliações</h1>
+  <p>Aqui está o histórico das avaliações que você já fez.</p>
+  <hr>
+
+  <div *ngIf="isLoading" class="text-center">
+    <strong>Carregando suas avaliações...</strong>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="avaliacoes.length === 0" class="alert alert-info text-center">
+      Você ainda não fez nenhuma avaliação.
+    </div>
+
+
+    <ul class="list-group">
+      <li *ngFor="let avaliacao of avaliacoes" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-1">
+            <a [routerLink]="['/filmes', avaliacao.filme.id]">
+              {{ avaliacao.filme.nome || 'Filme não encontrado' }}
+            </a>
+          </h5>
+          <p class="mb-1">"{{ avaliacao.comentario }}"</p>
+          <small>Avaliado em: {{ avaliacao.data | date: 'dd/MM/yyyy' }}</small>
+        </div>
+        <span class="badge bg-primary rounded-pill fs-6">{{ avaliacao.nota }} ★</span>
+      </li>
+    </ul>
+  </div>
+</div>

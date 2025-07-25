@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading" class="text-center">
+    <strong>Carregando seus dados...</strong>
+  </div>
+
+
+  <!-- O container principal só aparece quando os dados chegam e o loading termina -->
+  <div *ngIf="!isLoading && dadosConta as conta">
+    <h1>Minha Conta</h1>
+    <p>Olá, {{ conta.nome }}!</p>
+    <hr>
+
+    <div class="row">
+      <!-- Card: Dados Pessoais -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">
+            <h4>Dados Pessoais</h4>
+          </div>
+          <div class="card-body">
+            <p><strong>Nome:</strong> {{ conta.nome }}</p>
+            <p><strong>Email:</strong> {{ conta.email }}</p>
+            <p><strong>CPF:</strong> {{ conta.cpf }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Minha Assinatura -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">
+            <h4>Minha Assinatura</h4>
+          </div>
+          <div class="card-body">
+            <div *ngIf="conta.assinaturaAtiva; else semAssinatura">
+              <p><strong>Plano:</strong> {{ conta.assinaturaAtiva.plano.descricao }}</p>
+              <p><strong>Data de Início:</strong> {{ conta.assinaturaAtiva.dataInicio | date: 'dd/MM/yyyy' }}</p>
+              <a href="#" class="btn btn-success">Gerenciar Assinatura</a>
+            </div>
+            <ng-template #semAssinatura>
+              <div class="alert alert-info text-center">
+                Você ainda não possui uma assinatura ativa.
+                <br>
+                <a routerLink="/planos" class="alert-link">Que tal conhecer nossos planos?</a>
+              </div>
+            </ng-template>
+            <h4>Histórico</h4>
+            <ul>
+              <li *ngFor="let assinatura of conta.historicoAssinaturas">
+                Plano {{ assinatura.plano.descricao }} -
+                Status: {{ assinatura.ativa ? 'Ativo' : 'Encerrado' }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

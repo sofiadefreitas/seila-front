@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <h2 class="mb-4 border-bottom border-3 border-danger">Meu Histórico de Filmes</h2>
+  <div *ngIf="!isLoading">
+    <table *ngIf="historico.length > 0" class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+      <tr>
+        <th class="col-filme">Filme</th>
+        <th class="col-data" style="width: 25%;">Data da Visualização</th>
+        <th class="col-botao text-center" style="width: 15%;">Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let item of historico">
+
+        <td>
+          <a [routerLink]="['/filmes', item.filme.id]">
+            {{ item.filme.nome }}
+          </a>
+        </td>
+        <td>
+          {{ item.data | date:'dd/MM/yyyy HH:mm' }}
+        </td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-danger" (click)="removerDoHistorico(item.id!)">
+            <i class="bi bi-trash"></i> Remover
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="historico.length === 0" class="alert alert-info text-center">
+      Seu histórico está vazio. Comece a assistir!
+    </div>
+  </div>
+
+  <!-- Mensagem de carregamento que substitui a tabela enquanto os dados não chegam -->
+  <div *ngIf="isLoading" class="alert alert-info text-center">
+    Aguarde, carregando seu histórico...
+  </div>
+
+</div>

@@ -31,9 +31,16 @@
           </li>
         </ng-container>
 
-        <li *ngIf="!nomeUsuario" class="nav-item"> <!-- Mostra o botão Login SE o usuário NÃO estiver logado -->
-          <a class="nav-link" routerLink="/login">Login</a>
-        </li>
+        <ng-container *ngIf="!nomeUsuario">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/planos">Planos</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+        </ng-container>
+
       </ul>
     </div>
   </div>
