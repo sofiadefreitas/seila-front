@@ -27,6 +27,17 @@
       </div>
     </div>
 
+    <div *ngIf="urlVideo" class="mb-4">
+      <div class="ratio ratio-16x9">
+        <iframe
+          [src]="urlVideo | safeUrl"
+          title="Player do Trailer"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
     <!-- Adicione aqui as seções de avaliação se necessário -->
 
   </div>

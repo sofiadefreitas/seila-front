@@ -5,6 +5,7 @@ import {GeneroService} from "../../services/genero.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {Filme} from "../../models/filme";
+import {SafeUrlPipe} from "../../pipes/safe-url.pipe";
 
 @Component({
   selector: 'app-filme',
@@ -12,7 +13,8 @@ import {Filme} from "../../models/filme";
   imports: [
     RouterLink,
     NgForOf,
-    NgIf
+    NgIf,
+    SafeUrlPipe
   ],
   templateUrl: './filme.component.html',
   styleUrl: './filme.component.css'
@@ -20,6 +22,7 @@ import {Filme} from "../../models/filme";
 export class FilmeComponent {
   generos: Genero[] = [];
   detalhesFilme?: Filme;
+  urlVideo?: string;
 
   constructor(private filmeService: FilmeService, private generoService: GeneroService, private router: Router, private route: ActivatedRoute) {
   }
@@ -33,7 +36,12 @@ export class FilmeComponent {
       this.filmeService.buscar(id).subscribe(
         resultado => {
           this.detalhesFilme = resultado;
+          this.urlVideo = this.urlEmbed(this.detalhesFilme.urlVideo);
         });
+
+      // if (this.detalhesFilme?.urlVideo) {
+      //
+      // }
     }
   }
 
@@ -49,14 +57,21 @@ export class FilmeComponent {
                 filmesDoGenero => {
                   genero.filmes = filmesDoGenero; // Anexamos a lista de filmes ao objeto genero correspondente
                 });
-
-              // this.filmeService.getByGeneroId(genero.id!).subscribe(
-              //   resultado => {
-              //     this.filmes = resultado;
-              //   });
             }
           });
       });
   }
 
+  // modifica a url da API para uma url de vídeo para embedding no iframe
+  private urlEmbed(urlApi: string): string {
+    const videoIdMatch = urlApi.match(/[?&]v=([^&]+)/);
+
+    if (videoIdMatch && videoIdMatch[1]) {
+      const videoId = videoIdMatch[1];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    console.error("URL do YouTube inválida:", urlApi);
+    return ''; // Se não for um link do YouTube válido, retorne uma string vazia para não quebrar
+  }
 }
