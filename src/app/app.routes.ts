@@ -27,6 +27,8 @@ export const routes: Routes = [
 
   { path: 'filmes', component: FilmeComponent},
 
+  { path: 'filmes/:id', component: FilmeComponent},
+
   { path: 'minha-conta', component: MinhaContaComponent},
 
   { path: 'historico', component: HistoricoComponent },

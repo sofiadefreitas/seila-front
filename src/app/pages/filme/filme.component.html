@@ -1,23 +1,61 @@
 <div class="container mt-4">
 
-  <div *ngFor="let genero of generos" class="mb-5">
+  <div *ngIf="detalhesFilme; else listaFilmes">
+    <div class="row">
+      <!-- Coluna da Imagem -->
+<!--      <div class="col-md-4">-->
+<!--        <img [src]="detalhesFilme.urlImagem" class="img-fluid rounded shadow-sm" [alt]="detalhesFilme.nome">-->
+<!--      </div>-->
 
-    <h2 class="text-white fw-bold">{{ genero.descricao }}</h2>
-    <hr>
-    <div *ngIf="filmes" class="row">
+      <!-- Coluna dos Detalhes -->
+      <div class="col-md-8">
+        <h1>{{ detalhesFilme.nome }}</h1>
 
-      <div *ngFor="let filme of filmes" class="col-md-3 col-lg-3 mb-4">
-        <div class="card bg-dark text-white border-0 rounded-4 shadow">
-          <img [src]="filme.urlImagem"
-               class="card-img rounded-4"
-               [alt]="filme.nome"
-               style="height: 200px; object-fit: cover;">
-          <div class="card-img-overlay d-flex align-items-end p-2">
-            <h5 class="card-title bg-dark bg-opacity-75 p-2 rounded w-100 text-center m-0">{{ filme.nome }}</h5>
-<!--            <a [routerLink]="['/filmes', filme.id]" class="btn btn-primary">Ver detalhes</a>-->
-          </div>
-        </div>
+        <!-- Gêneros do Filme -->
+<!--        <div class="mb-3">-->
+<!--          <span *ngFor="let genero of detalhesFilme.generos" class="badge bg-secondary me-2 fs-6">-->
+<!--            {{ genero.descricao }}-->
+<!--          </span>-->
+<!--        </div>-->
 
+        <h4>Sinopse</h4>
+        <p class="lead">{{ detalhesFilme.sinopse }}</p>
+
+        <button class="btn btn-lg btn-danger">
+          <i class="bi bi-play-fill"></i> Assistir Agora
+        </button>
       </div>
     </div>
+
+    <!-- Adicione aqui as seções de avaliação se necessário -->
+
+  </div>
+
+  <ng-template #listaFilmes>
+    <div *ngFor="let genero of generos" class="mb-5">
+
+      <h4 class="text-white fw-bold">{{ genero.descricao }}</h4>
+      <hr>
+      <div *ngIf="genero.filmes" class="row">
+
+        <div *ngFor="let filme of genero.filmes" class="col-md-3 col-lg-3 mb-4 card-filme">
+          <!-- Card do Filme -->
+          <div class="card h-100 border-0 rounded-4 shadow">
+            <a [routerLink]="['/filmes', filme.id]">
+              <img [src]="filme.urlImagem"
+                   class="card-img-top rounded-top-4"
+                   [alt]="filme.nome">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-light">
+                <h6 class="card-title text-center">{{ filme.nome }}</h6>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
 </div>
