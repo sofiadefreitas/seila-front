@@ -11,6 +11,7 @@ import {MinhaContaComponent} from "./pages/minha-conta/minha-conta.component";
 import {AvaliacaoComponent} from "./pages/avaliacao/avaliacao.component";
 import {HistoricoComponent} from "./pages/historico/historico.component";
 import {AssinaturaComponent} from "./pages/assinatura/assinatura.component";
+import {AvaliacaoCadastroComponent} from "./pages/avaliacao-cadastro/avaliacao-cadastro.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -34,6 +35,8 @@ export const routes: Routes = [
   { path: 'historico', component: HistoricoComponent },
 
   { path: 'avaliacoes', component: AvaliacaoComponent},
+
+  { path: 'avaliar/:idFilme', component: AvaliacaoCadastroComponent},
 
   { path: 'minha-conta/assinaturas', component: AssinaturaComponent}
 

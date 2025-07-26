@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Avaliar Filme: {{ filme?.nome || 'Carregando...' }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <!-- Campo Nota -->
+            <div class="mb-3">
+              <label for="nota" class="form-label">Sua Nota (de 0 a 5):</label>
+              <select id="nota" class="form-select" formControlName="nota">
+                <option value="5">5 ★ (Perfeito)</option>
+                <option value="4">4 ★ (Ótimo)</option>
+                <option value="3">3 ★ (Bom)</option>
+                <option value="2">2 ★ (Regular)</option>
+                <option value="1">1 ★ (Ruim)</option>
+                <option value="0">0 ★ (Péssimo)</option>
+              </select>
+            </div>
+
+            <!-- Campo Comentário -->
+            <div class="mb-3">
+              <label for="comentario" class="form-label">Seu Comentário:</label>
+              <textarea id="comentario" class="form-control" formControlName="comentario" rows="5"
+                        placeholder="Escreva sua opinião sobre o filme..."></textarea>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-end">
+              <a routerLink="/historico" class="btn btn-secondary me-2">Cancelar</a>
+              <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">
+                Enviar Avaliação
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
