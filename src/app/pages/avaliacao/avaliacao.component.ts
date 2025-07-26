@@ -44,16 +44,6 @@ export class AvaliacaoComponent {
         avaliacoes: this.avaliacaoService.getByClienteId(idCliente),
         filmes: this.filmeService.listar()
       }
-      //
-      // this.avaliacaoService.getByClienteId(idCliente).subscribe({
-      //   next: (dados) => {
-      //     this.avaliacoes = dados;
-      //     this.isLoading = false;
-      // //   },
-      // error: (err) => {
-      //   console.error('Erro ao carregar avaliações', err);
-      //   this.isLoading = false;
-      // }
 
       forkJoin(chamadas).subscribe({
         next: (resultado) => {

@@ -3,6 +3,9 @@ import {AssinaturaService} from "../../services/assinatura.service";
 import {LoginService} from "../../services/login.service";
 import {Assinatura} from "../../models/assinatura";
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {PlanoService} from "../../services/plano.service";
+import {forkJoin} from "rxjs";
+import {Plano} from "../../models/plano";
 
 @Component({
   selector: 'app-assinatura',
@@ -23,7 +26,8 @@ export class AssinaturaComponent {
 
   constructor(
     private assinaturaService: AssinaturaService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private planoService: PlanoService
   ) {}
 
   ngOnInit(): void {
@@ -33,21 +37,58 @@ export class AssinaturaComponent {
     if (dadosToken && dadosToken.id) {
       const clienteId = dadosToken.id;
 
-      this.assinaturaService.getByClienteId(clienteId).subscribe({
-        next: (dados) => {
-          this.assinaturas = dados.sort((a, b) =>
+      const chamadas = {
+        assinaturas: this.assinaturaService.getByClienteId(clienteId),
+        planos: this.planoService.listar()
+      };
+
+      forkJoin(chamadas).subscribe({
+        next: (resultado) => {
+          const { assinaturas, planos } = resultado;
+
+          this.assinaturas = this.addPlanosAsAssinaturas(assinaturas, planos);
+
+          // Ordenar a lista da mais recente para a mais antiga
+          this.assinaturas.sort((a, b) =>
             new Date(b.dataInicio).getTime() - new Date(a.dataInicio).getTime()
           );
+
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('Erro ao carregar o histórico de assinaturas:', err);
+          console.error('Erro ao carregar dados de assinatura:', err);
           this.isLoading = false;
         }
       });
+      //
+      // this.assinaturaService.getByClienteId(clienteId).subscribe({
+      //   next: (dados) => {
+      //     this.assinaturas = dados.sort((a, b) =>
+      //       new Date(b.dataInicio).getTime() - new Date(a.dataInicio).getTime()
+      //     );
+      //     this.isLoading = false;
+      //   },
+      //   error: (err) => {
+      //     console.error('Erro ao carregar o histórico de assinaturas:', err);
+      //     this.isLoading = false;
+      //   }
+      // });
     } else {
       console.error('ID do cliente não encontrado.');
       this.isLoading = false;
     }
+  }
+
+  private addPlanosAsAssinaturas(assinaturas: Assinatura[], planos: Plano[]): Assinatura[] {
+    // Mapa de filmes para busca rápida (evita muitas consultas à API)
+    const mapaDePlanos = new Map<number, Plano>(planos.map(p => [p.id!, p]));
+
+    assinaturas.forEach(assinatura => {
+      if (assinatura.idPlano) {
+        assinatura.plano = mapaDePlanos.get(assinatura.idPlano);
+      }
+    });
+
+    return assinaturas;
   }
 }

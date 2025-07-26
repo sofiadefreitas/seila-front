@@ -63,20 +63,9 @@ export class HistoricoComponent {
         }
       });
       }
-    // this.historicoService.getByClienteId(idCliente).subscribe({
-    //   next: (dados) => {
-    //     this.historico = dados;
-    //     this.isLoading = false;
-    //   },
-    //   error: (err) => {
-    //     console.error('Erro ao carregar o histórico:', err);
-    //     alert('Não foi possível carregar seu histórico. Tente novamente mais tarde.');
-    //     this.isLoading = false;
-    //   }
-    // });
   }
 
-  addFilmesNoHistorico(historicos: Historico[], filmes: Filme[]) : Historico[] {
+  private addFilmesNoHistorico(historicos: Historico[], filmes: Filme[]) : Historico[] {
     const mapaDeFilmes = new Map<number, Filme>(filmes.map(f => [f.id!, f])); // Mapa de filmes para busca rápida (evita muitas consultas à API)
 
     historicos.forEach(historico => {
