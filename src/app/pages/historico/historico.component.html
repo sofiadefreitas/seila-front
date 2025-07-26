@@ -1,7 +1,12 @@
 <div class="container mt-4">
-  <h2 class="mb-4 border-bottom border-3 border-danger">Meu Histórico de Filmes</h2>
+  <h2 class="mb-4">Meu Histórico de Filmes</h2>
+
+  <div *ngIf="isLoading" class="alert alert-info text-center">
+    Aguarde, carregando seu histórico...
+  </div>
+
   <div *ngIf="!isLoading">
-    <table *ngIf="historico.length > 0" class="table table-bordered table-hover align-middle">
+    <table *ngIf="historico.length > 0; else historicoVazio" class="table table-bordered table-hover align-middle">
       <thead class="table-dark">
       <tr>
         <th class="col-filme">Filme</th>
@@ -10,18 +15,18 @@
       </tr>
       </thead>
       <tbody>
-
       <tr *ngFor="let item of historico">
-
         <td>
-          <a [routerLink]="['/filmes', item.filme.id]">
-            {{ item.filme.nome }}
+          <!-- CORREÇÃO PREVENTIVA AQUI -->
+          <a [routerLink]="['/filmes', item.filme?.id]">
+            {{ item.filme?.nome || 'Detalhes do Filme' }}
           </a>
         </td>
         <td>
           {{ item.data | date:'dd/MM/yyyy HH:mm' }}
         </td>
         <td class="text-center">
+          <!-- O '!' aqui diz ao TypeScript "confie em mim, o ID existe", o que é seguro para um botão de exclusão -->
           <button class="btn btn-sm btn-danger" (click)="removerDoHistorico(item.id!)">
             <i class="bi bi-trash"></i> Remover
           </button>
@@ -30,14 +35,11 @@
       </tbody>
     </table>
 
-    <div *ngIf="historico.length === 0" class="alert alert-info text-center">
-      Seu histórico está vazio. Comece a assistir!
-    </div>
+    <!-- Template que é mostrado se o histórico estiver vazio -->
+    <ng-template #historicoVazio>
+      <div class="alert alert-info text-center">
+        Seu histórico está vazio. Comece a assistir!
+      </div>
+    </ng-template>
   </div>
-
-  <!-- Mensagem de carregamento que substitui a tabela enquanto os dados não chegam -->
-  <div *ngIf="isLoading" class="alert alert-info text-center">
-    Aguarde, carregando seu histórico...
-  </div>
-
 </div>

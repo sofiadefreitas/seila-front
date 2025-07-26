@@ -8,7 +8,7 @@ export class MinhaConta {
   email!: string;
   login!: string;
   assinaturaAtiva?: Assinatura;
-  historicoAssinaturas?: Assinatura[];
+  historicoAssinaturas: Assinatura[] = [];
 
   constructor(cliente: Cliente, assinaturas: Assinatura[]) {
     this.id = cliente.id;

@@ -28,10 +28,13 @@ export class AvaliacaoComponent {
   ) { }
 
   ngOnInit(): void {
-    const clienteId = this.loginService.extrairDadosToken().id;
+    this.isLoading = true;
 
-    if (clienteId) {
-      this.avaliacaoService.getByClienteId(clienteId).subscribe({
+    const dadosToken = this.loginService.extrairDadosToken();
+
+    if (dadosToken && dadosToken.id) {
+      const idCliente = dadosToken.id;
+      this.avaliacaoService.getByClienteId(idCliente).subscribe({
         next: (dados) => {
           this.avaliacoes = dados;
           this.isLoading = false;
@@ -41,6 +44,9 @@ export class AvaliacaoComponent {
           this.isLoading = false;
     }
       });
+    }  else {
+      console.error('Token ou ID do cliente não encontrado ao iniciar o componente.');
+      this.isLoading = false;
     }
   }
 }

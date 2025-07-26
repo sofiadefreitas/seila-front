@@ -20,22 +20,19 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
 export class HistoricoComponent {
 
   historico: Historico[] = [];
-  isLoading = true; // Flag para controlar o estado de carregamento (spinner)
+  isLoading = true;
 
   constructor(
     private historicoService: HistoricoService,
     private loginService: LoginService,
-    private router: Router // Router pode ser útil para redirecionamentos
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.carregarHistorico();
-  }
-
-  carregarHistorico(): void {
-    this.isLoading = true; // Sempre inicia o carregamento
+    this.isLoading = true;
 
     const dadosToken = this.loginService.extrairDadosToken();
+
     if (!dadosToken || !dadosToken.id) {
       console.error('ID do cliente não encontrado. Não é possível carregar o histórico.');
       this.isLoading = false;
@@ -45,8 +42,8 @@ export class HistoricoComponent {
     const clienteId = dadosToken.id;
 
     this.historicoService.getByClienteId(clienteId).subscribe({
-      next: (dadosDoHistorico) => {
-        this.historico = dadosDoHistorico;
+      next: (dados) => {
+        this.historico = dados;
         this.isLoading = false;
       },
       error: (err) => {

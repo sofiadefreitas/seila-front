@@ -1,1 +1,39 @@
-<p>assinatura works!</p>
+
+<div class="container mt-4">
+  <h2 class="mb-4">Histórico de Assinaturas</h2>
+
+  <div *ngIf="isLoading" class="alert alert-info text-center">
+    Carregando...
+  </div>
+
+  <div *ngIf="!isLoading">
+    <table *ngIf="assinaturas.length > 0; else semHistorico" class="table table-hover align-middle">
+      <thead class="table-dark">
+      <tr>
+        <th>Plano</th>
+        <th>Data de Início</th>
+        <th>Data de Fim</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let assinatura of assinaturas">
+        <td>{{ assinatura.plano?.descricao || 'Plano não informado' }}</td>
+        <td>{{ assinatura.dataInicio | date:'dd/MM/yyyy' }}</td>
+        <td>{{ assinatura.dataFim ? (assinatura.dataFim | date:'dd/MM/yyyy') : 'Em andamento' }}</td>
+        <td>
+            <span class="badge" [ngClass]="{'bg-success': assinatura.ativa, 'bg-danger': !assinatura.ativa}">
+              {{ assinatura.ativa ? 'Ativa' : 'Encerrada' }}
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <ng-template #semHistorico>
+      <div class="alert alert-info">
+        Você não possui um histórico de assinaturas.
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -2,20 +2,22 @@
 
   <div *ngFor="let genero of generos" class="mb-5">
 
-    <h2>{{ genero.descricao }}</h2>
+    <h2 class="text-white fw-bold">{{ genero.descricao }}</h2>
     <hr>
     <div *ngIf="filmes" class="row">
 
-      <div *ngFor="let filme of filmes" class="col-md-3 mb-4">
-        <div class="card h-100">
-          <img [src]="filme.urlImagem" class="card-img-top" [alt]="filme.nome">
-          <div class="card-body">
-            <h5 class="card-title">{{ filme.nome }}</h5>
+      <div *ngFor="let filme of filmes" class="col-md-3 col-lg-3 mb-4">
+        <div class="card bg-dark text-white border-0 rounded-4 shadow">
+          <img [src]="filme.urlImagem"
+               class="card-img rounded-4"
+               [alt]="filme.nome"
+               style="height: 200px; object-fit: cover;">
+          <div class="card-img-overlay d-flex align-items-end p-2">
+            <h5 class="card-title bg-dark bg-opacity-75 p-2 rounded w-100 text-center m-0">{{ filme.nome }}</h5>
 <!--            <a [routerLink]="['/filmes', filme.id]" class="btn btn-primary">Ver detalhes</a>-->
           </div>
         </div>
 
       </div>
     </div>
-  </div>
 </div>
