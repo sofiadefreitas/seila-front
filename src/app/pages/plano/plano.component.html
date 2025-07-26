@@ -1,19 +1,45 @@
-<h1>Planos</h1>
+<div class="container mt-4 mb-5">
+  <!-- Cabeçalho da Página -->
+  <div class="text-center mb-5">
+    <h1 class="display-4">Nossos Planos</h1>
+    <p class="lead">Escolha o plano perfeito para você e comece a assistir agora mesmo.</p>
+  </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Descrição</th>
-      <th>Valor R$</th>
-    </tr>
-  </thead>
+  <!-- Mensagem de Carregamento -->
+  <div *ngIf="isLoading" class="text-center">
+    <strong>Carregando planos...</strong>
+  </div>
 
-  <tbody>
-    <tr *ngFor="let plano of planos">
-      <td>{{plano.id}}</td>
-      <td>{{plano.descricao}}</td>
-      <td>{{plano.valor}}</td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Container dos Cards -->
+  <div *ngIf="!isLoading">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <div *ngFor="let plano of planos" class="col">
+        <div class="card h-100 text-center shadow">
+
+          <div class="card-header">
+            <h4 class="my-0 fw-normal">{{ plano.descricao }}</h4>
+          </div>
+
+          <div class="card-body d-flex flex-column">
+            <h1 class="card-title pricing-card-title">
+              R$ {{ plano.valor | number:'1.2-2' }} <small class="text-muted fw-light">/mês</small>
+            </h1>
+
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Acesso a todo o catálogo</li>
+              <li>Assista em até {{ plano.id }} tela(s) simultaneamente</li>
+              <li>Qualidade Full HD</li>
+              <li>Cancele quando quiser</li>
+            </ul>
+
+            <button type="button" class="w-100 btn btn-lg btn-primary mt-auto" (click)="selecionarPlano(plano)">
+              Assinar Agora
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
