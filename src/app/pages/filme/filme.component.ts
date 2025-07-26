@@ -6,6 +6,7 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {Filme} from "../../models/filme";
 import {SafeUrlPipe} from "../../pipes/safe-url.pipe";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-filme',
@@ -24,7 +25,7 @@ export class FilmeComponent {
   detalhesFilme?: Filme;
   urlVideo?: string;
 
-  constructor(private filmeService: FilmeService, private generoService: GeneroService, private router: Router, private route: ActivatedRoute) {
+  constructor(private filmeService: FilmeService, private generoService: GeneroService, private router: Router, private route: ActivatedRoute, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
@@ -33,15 +34,17 @@ export class FilmeComponent {
     if (!id) {
       this.carregarFilmesPorGenero();
     } else {
-      this.filmeService.buscar(id).subscribe(
-        resultado => {
-          this.detalhesFilme = resultado;
-          this.urlVideo = this.urlEmbed(this.detalhesFilme.urlVideo);
-        });
+      if (this.loginService.obterToken()) {
+        this.filmeService.buscar(id).subscribe(
+          resultado => {
+            this.detalhesFilme = resultado;
+            this.urlVideo = this.urlEmbed(this.detalhesFilme.urlVideo);
+          });
+      } else { // não é usuário logado
+        alert('Você precisa de uma assinatura ativa para ver detalhes do filme.');
+        this.router.navigate(['/planos']);
+      }
 
-      // if (this.detalhesFilme?.urlVideo) {
-      //
-      // }
     }
   }
 

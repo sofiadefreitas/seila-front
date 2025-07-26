@@ -38,7 +38,7 @@ export class PlanoComponent {
   }
 
   selecionarPlano(plano: Plano) {
-    alert(`Você selecionou o plano ${plano.descricao}. Próximo passo: pagamento!`);
-    this.router.navigate(['pagamento', plano.id!]);
+    alert(`Você selecionou o plano ${plano.descricao} por R$ ${plano.valor}!`);
+    this.router.navigate(['cadastro', plano.id!]);
   }
 }
