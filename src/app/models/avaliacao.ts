@@ -6,6 +6,8 @@ export class Avaliacao {
   data?: Date;
   comentario?: string;
   nota!: number;
-  filme!: Filme;
+  idFilme!: number;
+  filme?: Filme;
+  idCliente!: number;
   cliente!: Cliente;
 }
