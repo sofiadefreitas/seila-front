@@ -4,6 +4,8 @@ import {Filme} from "./filme";
 export class Historico {
   id?: number;
   data!: Date;
-  filme!: Filme;
-  cliente!: Cliente;
+  idFilme!: number;
+  filme?: Filme;
+  idCliente!: number;
+  cliente?: Cliente;
 }

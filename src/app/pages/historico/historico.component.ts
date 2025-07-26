@@ -4,6 +4,9 @@ import {HistoricoService} from "../../services/historico.service";
 import {LoginService} from "../../services/login.service";
 import {Router, RouterLink} from "@angular/router";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {FilmeService} from "../../services/filme.service";
+import {forkJoin} from "rxjs";
+import {Filme} from "../../models/filme";
 
 @Component({
   selector: 'app-historico',
@@ -25,7 +28,7 @@ export class HistoricoComponent {
   constructor(
     private historicoService: HistoricoService,
     private loginService: LoginService,
-    private router: Router
+    private filmeService: FilmeService
   ) {}
 
   ngOnInit(): void {
@@ -37,21 +40,52 @@ export class HistoricoComponent {
       console.error('ID do cliente não encontrado. Não é possível carregar o histórico.');
       this.isLoading = false;
       return;
-    }
+    } else {
 
-    const clienteId = dadosToken.id;
+      const idCliente = dadosToken.id;
 
-    this.historicoService.getByClienteId(clienteId).subscribe({
-      next: (dados) => {
-        this.historico = dados;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Erro ao carregar o histórico:', err);
-        alert('Não foi possível carregar seu histórico. Tente novamente mais tarde.');
-        this.isLoading = false;
+      const chamadas = {
+        historicos: this.historicoService.getByClienteId(idCliente),
+        filmes: this.filmeService.listar()
+      };
+
+      forkJoin(chamadas).subscribe({
+        next: (resultado) => {
+          const { historicos, filmes } = resultado;
+
+          this.historico = this.addFilmesNoHistorico(historicos, filmes);
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Erro ao carregar dados do histórico de filmes', err);
+          this.isLoading = false;
+        }
+      });
+      }
+    // this.historicoService.getByClienteId(idCliente).subscribe({
+    //   next: (dados) => {
+    //     this.historico = dados;
+    //     this.isLoading = false;
+    //   },
+    //   error: (err) => {
+    //     console.error('Erro ao carregar o histórico:', err);
+    //     alert('Não foi possível carregar seu histórico. Tente novamente mais tarde.');
+    //     this.isLoading = false;
+    //   }
+    // });
+  }
+
+  addFilmesNoHistorico(historicos: Historico[], filmes: Filme[]) : Historico[] {
+    const mapaDeFilmes = new Map<number, Filme>(filmes.map(f => [f.id!, f])); // Mapa de filmes para busca rápida (evita muitas consultas à API)
+
+    historicos.forEach(historico => {
+      if (historico.idFilme) {
+        historico.filme = mapaDeFilmes.get(historico.idFilme);
       }
     });
+
+    return historicos;
   }
 
   removerDoHistorico(idHistorico: number): void {
