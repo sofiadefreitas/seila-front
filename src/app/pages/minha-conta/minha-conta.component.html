@@ -32,9 +32,7 @@
             <h4>Minha Assinatura</h4>
           </div>
           <div class="card-body">
-            <!-- O *ngIf aqui já funciona perfeitamente com a lógica do nosso modelo -->
             <div *ngIf="conta.assinaturaAtiva; else semAssinatura">
-              <!-- CORREÇÃO PREVENTIVA AQUI: Adicionamos o '?' -->
               <p><strong>Plano:</strong> {{ conta.assinaturaAtiva.plano?.descricao || 'Plano não informado' }}</p>
               <p><strong>Data de Início:</strong> {{ conta.assinaturaAtiva.dataInicio | date: 'dd/MM/yyyy' }}</p>
               <a href="#" class="btn btn-success">Gerenciar Assinatura</a>
@@ -51,16 +49,6 @@
             <div class="text-center">
               <a routerLink="/minha-conta/assinaturas" class="btn btn-secondary">Ver Histórico</a>
             </div>
-<!--            &lt;!&ndash; Seção de Histórico &ndash;&gt;-->
-<!--            &lt;!&ndash; O 'if' aqui garante que o título só apareça se houver histórico &ndash;&gt;-->
-<!--            <h4 *ngIf="conta.historicoAssinaturas && conta.historicoAssinaturas.length > 0" class="mt-4">Histórico</h4>-->
-<!--            <ul>-->
-<!--              <li *ngFor="let assinatura of conta.historicoAssinaturas">-->
-<!--                &lt;!&ndash; CORREÇÃO PREVENTIVA AQUI: Adicionamos o '?' &ndash;&gt;-->
-<!--                Plano {{ assinatura.plano?.descricao || 'N/D' }} - -->
-<!--                Status: {{ assinatura.ativa ? 'Ativo' : 'Encerrado' }}-->
-<!--              </li>-->
-<!--            </ul>-->
 
           </div>
         </div>
@@ -69,4 +57,5 @@
 
 
   </div>
+</div>
 </div>

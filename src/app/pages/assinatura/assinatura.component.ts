@@ -80,7 +80,7 @@ export class AssinaturaComponent {
   }
 
   private addPlanosAsAssinaturas(assinaturas: Assinatura[], planos: Plano[]): Assinatura[] {
-    // Mapa de filmes para busca rápida (evita muitas consultas à API)
+    // Mapa de planos para busca rápida (evita muitas consultas à API)
     const mapaDePlanos = new Map<number, Plano>(planos.map(p => [p.id!, p]));
 
     assinaturas.forEach(assinatura => {
