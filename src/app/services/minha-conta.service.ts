@@ -7,6 +7,10 @@ import {AssinaturaService} from "./assinatura.service";
 import {PlanoService} from "./plano.service";
 import {Assinatura} from "../models/assinatura";
 import {Plano} from "../models/plano";
+import {PerfilService} from "./perfil.service";
+import {GeneroService} from "./genero.service";
+import {Perfil} from "../models/perfil";
+import {Genero} from "../models/genero";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +22,9 @@ export class MinhaContaService {
     private loginService: LoginService,
     private clienteService: ClienteService,
     private assinaturaService: AssinaturaService,
-    private planoService: PlanoService) { }
+    private planoService: PlanoService,
+    private perfilService: PerfilService,
+    private generoService: GeneroService) { }
 
   carregarDados(): Observable<MinhaConta> {
     const dadosToken = this.loginService.extrairDadosToken();
@@ -32,16 +38,19 @@ export class MinhaContaService {
     const chamadas = {
       cliente: this.clienteService.buscar(idCliente),
       assinaturas: this.assinaturaService.getByClienteId(idCliente),
-      planos: this.planoService.listar()
+      planos: this.planoService.listar(),
+      perfis: this.perfilService.getPerfis(),
+      todosOsGeneros: this.generoService.listar()
     };
 
     return forkJoin(chamadas).pipe(
       map(resultado => {
-        const { cliente, assinaturas, planos } = resultado;
+        const { cliente, assinaturas, planos, perfis, todosOsGeneros } = resultado;
+
+        const perfisComDescricao = this.addDescricaoAosPerfis(perfis, todosOsGeneros);
         const assinaturasComPlanos = this.addPlanosAsAssinaturas(assinaturas, planos);
 
-        // O construtor de MinhaConta fará o resto (encontrar a assinatura ativa, etc.)
-        return new MinhaConta(cliente, assinaturasComPlanos);
+        return new MinhaConta(cliente, assinaturasComPlanos, perfisComDescricao);
       })
     );
   }
@@ -56,5 +65,20 @@ export class MinhaContaService {
       }
     });
     return assinaturas;
+  }
+
+  private addDescricaoAosPerfis(perfis: Perfil[], todosOsGeneros: Genero[]): Perfil[] {
+
+    const mapaDeGeneros = new Map<number, string>(todosOsGeneros.map(g => [g.id!, g.descricao]));
+
+    perfis.forEach(perfil => {
+      const descricaoDoGenero = mapaDeGeneros.get(perfil.idGenero);
+
+      if (descricaoDoGenero) {
+        perfil.descricaoDoGenero = descricaoDoGenero;
+      }
+    });
+
+    return perfis;
   }
 }
