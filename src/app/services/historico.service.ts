@@ -18,13 +18,9 @@ export class HistoricoService {
   //   return this.http.get<Historico[]>(this.apiUrl, this.loginService.gerarCabecalhoHTTP());
   // }
 
-  // salvar(historico: Historico): Observable<Historico> {
-  //   if (historico.id) {
-  //     return this.http.put<Historico>(`${this.apiUrl}/${historico.id}`, historico, this.loginService.gerarCabecalhoHTTP());
-  //   } else {
-  //     return this.http.post<Historico>(this.apiUrl, historico, this.loginService.gerarCabecalhoHTTP());
-  //   }
-  // }
+  salvar(historico: Historico): Observable<Historico> {
+    return this.http.post<Historico>(this.apiUrl, historico, this.loginService.gerarCabecalhoHTTP());
+  }
 
   excluir(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, this.loginService.gerarCabecalhoHTTP());

@@ -7,6 +7,8 @@ import {NgForOf, NgIf} from "@angular/common";
 import {Filme} from "../../models/filme";
 import {SafeUrlPipe} from "../../pipes/safe-url.pipe";
 import {LoginService} from "../../services/login.service";
+import {HistoricoService} from "../../services/historico.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-filme',
@@ -24,9 +26,16 @@ export class FilmeComponent {
   generos: Genero[] = [];
   detalhesFilme?: Filme;
   urlVideo?: string;
+  playerVideo = false;
 
-  constructor(private filmeService: FilmeService, private generoService: GeneroService, private router: Router, private route: ActivatedRoute, private loginService: LoginService) {
-  }
+  constructor(
+    private filmeService: FilmeService,
+    private generoService: GeneroService,
+    private loginService: LoginService,
+    private historicoService: HistoricoService,
+    private router: Router,
+    private route: ActivatedRoute)
+  { }
 
   ngOnInit(): void {
     let id = Number(this.route.snapshot.paramMap.get('id'));
@@ -76,5 +85,30 @@ export class FilmeComponent {
 
     console.error("URL do YouTube inválida:", urlApi);
     return ''; // Se não for um link do YouTube válido, retorne uma string vazia para não quebrar
+  }
+
+  assistirTrailer() : void {
+    const dadosToken = this.loginService.extrairDadosToken();
+    if (!dadosToken || !dadosToken.id) {
+      alert('Você precisa de uma assinatura ativa para assistir o trailer.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.playerVideo = true;
+    const novoHistorico = {
+      data: new Date(),
+      idFilme: this.detalhesFilme!.id,
+      idCliente: dadosToken.id
+    };
+
+    this.historicoService.salvar(novoHistorico as any).subscribe({
+      next: () => {
+        console.log('Filme adicionado ao histórico com sucesso!');
+      },
+      error: (err) => {
+        console.error('Erro ao registrar no histórico:', err);
+      }
+    });
   }
 }

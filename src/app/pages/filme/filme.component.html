@@ -21,13 +21,13 @@
         <h4>Sinopse</h4>
         <p class="lead">{{ detalhesFilme.sinopse }}</p>
 
-        <button class="btn btn-lg btn-danger">
-          <i class="bi bi-play-fill"></i> Assistir Agora
+        <button *ngIf="!playerVideo" class="btn btn-lg btn-danger" (click)="assistirTrailer()">
+          <i class="bi bi-play-fill"></i> Assistir Trailer
         </button>
       </div>
     </div>
 
-    <div *ngIf="urlVideo" class="mb-4">
+    <div *ngIf="urlVideo && playerVideo" class="mb-4">
       <div class="ratio ratio-16x9">
         <iframe
           [src]="urlVideo | safeUrl"
