@@ -1,40 +1,54 @@
+<div class="container mt-4">
 
-<!--<div class="seila-container">-->
-<!--  <app-menu></app-menu>-->
+  <div *ngIf="isLoading" class="text-center">
+    <strong>Carregando sua página inicial...</strong>
+  </div>
 
-<!--  <div class="container mt-5 px-4">-->
-<!--    &lt;!&ndash; Seção de filmes &ndash;&gt;-->
-<!--    <div class="row mb-5">-->
-<!--      <div class="col-12 mb-4">-->
-<!--        <h2 class="text-light">Destaques</h2>-->
-<!--      </div>-->
+  <div *ngIf="!isLoading">
+    <!-- ========================================================== -->
+    <!--      SEÇÃO DOS GÊNEROS PREFERIDOS                      -->
+    <!-- ========================================================== -->
+    <div *ngFor="let genero of generosPreferidosComFilmes" class="mb-5">
+      <h4>{{ genero.descricao }}</h4>
+      <hr>
+      <div *ngIf="genero.filmes" class="row">
+        <div *ngFor="let filme of genero.filmes" class="col-md-3 col-lg-3 mb-4 card-filme">
+          <div class="card h-100 border-0 rounded-4 shadow">
+            <a [routerLink]="['/filmes', filme.id]">
+              <img [src]="filme.urlImagem" class="card-img-top rounded-top-4">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-dark">
+                <h6 class="card-title text-center">{{ filme.nome }}</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!--      &lt;!&ndash; Cards de filmes (substitua pelos seus dados reais) &ndash;&gt;-->
-<!--      <div class="col-md-3 col-6 mb-4" *ngFor="let filme of filmesDestaque">-->
-<!--        <div class="card bg-transparent border-0">-->
-<!--          <img [src]="filme.capaUrl" class="card-img-top rounded" [alt]="filme.titulo">-->
-<!--          <div class="card-body px-0">-->
-<!--            <h5 class="card-title text-light">{{ filme.titulo | uppercase }}</h5>-->
-<!--            <p class="card-text text-secondary" *ngIf="filme.subtitulo">{{ filme.subtitulo }}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!-- ========================================================== -->
+    <!--      SEÇÃO "ASSISTA NOVAMENTE"                         -->
+    <!-- ========================================================== -->
+    <!-- Só mostra esta seção se houver itens no histórico -->
+    <div *ngIf="historicoParaExibir.length > 0" class="mb-5">
+      <h2>Assista Novamente</h2>
+      <hr>
+      <div class="row">
+        <div *ngFor="let item of historicoParaExibir" class="col-md-3 col-lg-3 mb-4 card-filme">
+          <div class="card h-100 border-0 rounded-4 shadow">
+            <a [routerLink]="['/filmes', item.filme?.id]">
+              <img [src]="item.filme?.urlImagem" class="card-img-top rounded-top-4">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['/filmes', item.filme?.id]" class="text-decoration-none text-dark">
+                <h5 class="card-title text-center">{{ item.filme?.nome }}</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!--    &lt;!&ndash; Seção por gêneros &ndash;&gt;-->
-<!--    <div class="row mb-5" *ngFor="let genero of generos">-->
-<!--      <div class="col-12 mb-4">-->
-<!--        <h2 class="text-light">{{ genero.nome }}</h2>-->
-<!--      </div>-->
-
-<!--      <div class="col-md-3 col-6 mb-4" *ngFor="let filme of genero.filmes">-->
-<!--        <div class="card bg-transparent border-0">-->
-<!--          <img [src]="filme.capaUrl" class="card-img-top rounded" [alt]="filme.titulo">-->
-<!--          <div class="card-body px-0">-->
-<!--            <h5 class="card-title text-light">{{ filme.titulo | uppercase }}</h5>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+  </div>
+</div>

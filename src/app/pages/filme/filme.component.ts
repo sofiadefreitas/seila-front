@@ -9,6 +9,7 @@ import {SafeUrlPipe} from "../../pipes/safe-url.pipe";
 import {LoginService} from "../../services/login.service";
 import {HistoricoService} from "../../services/historico.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-filme',
@@ -44,14 +45,34 @@ export class FilmeComponent {
       this.carregarFilmesPorGenero();
     } else {
       if (this.loginService.obterToken()) {
-        this.filmeService.buscar(id).subscribe(
-          resultado => {
-            this.detalhesFilme = resultado;
+
+        const chamadas = {
+          filme: this.filmeService.buscar(id),
+          generos: this.filmeService.getGenerosDoFilme(id)
+        };
+
+        forkJoin(chamadas).subscribe({
+          next: (resultado) => {
+            const { filme, generos } = resultado;
+
+            this.detalhesFilme = filme;
+            this.detalhesFilme.generos = generos;
             this.urlVideo = this.urlEmbed(this.detalhesFilme.urlVideo);
-          });
+          },
+          error: (err) => {
+            console.error('Erro ao carregar dados do filme');
+          }
+        });
+
+        // this.filmeService.buscar(id).subscribe(
+        //   resultado => {
+        //     this.detalhesFilme = resultado;
+        //     this.urlVideo = this.urlEmbed(this.detalhesFilme.urlVideo);
+        //   });
+
       } else { // não é usuário logado
-        alert('Você precisa de uma assinatura ativa para ver detalhes do filme.');
-        this.router.navigate(['/planos']);
+        alert('Você precisa estar logado para ver detalhes do filme.');
+        this.router.navigate(['/login']);
       }
 
     }

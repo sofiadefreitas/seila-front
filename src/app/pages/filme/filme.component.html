@@ -3,22 +3,22 @@
   <div *ngIf="detalhesFilme; else listaFilmes">
     <div class="row">
       <!-- Coluna da Imagem -->
-<!--      <div class="col-md-4">-->
-<!--        <img [src]="detalhesFilme.urlImagem" class="img-fluid rounded shadow-sm" [alt]="detalhesFilme.nome">-->
-<!--      </div>-->
+      <div class="col-md-4">
+        <img [src]="detalhesFilme.urlImagem" class="img-fluid rounded shadow-sm" [alt]="detalhesFilme.nome">
+      </div>
 
       <!-- Coluna dos Detalhes -->
       <div class="col-md-8">
         <h1>{{ detalhesFilme.nome }}</h1>
 
         <!-- Gêneros do Filme -->
-<!--        <div class="mb-3">-->
-<!--          <span *ngFor="let genero of detalhesFilme.generos" class="badge bg-secondary me-2 fs-6">-->
-<!--            {{ genero.descricao }}-->
-<!--          </span>-->
-<!--        </div>-->
+        <div class="mb-3">
+          <span *ngFor="let genero of detalhesFilme.generos" class="badge bg-secondary me-2 fs-6">
+            {{ genero.descricao }}
+          </span>
+        </div>
 
-        <h4>Sinopse</h4>
+        <!-- Sinopse do Filme -->
         <p class="lead">{{ detalhesFilme.sinopse }}</p>
 
         <button *ngIf="!playerVideo" class="btn btn-lg btn-danger"
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <!-- Adicione aqui as seções de avaliação se necessário -->
+    <!-- seções de avaliação -->
 
   </div>
 
