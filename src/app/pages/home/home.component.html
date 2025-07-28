@@ -13,12 +13,15 @@
       <hr>
       <div *ngIf="genero.filmes" class="row">
         <div *ngFor="let filme of genero.filmes" class="col-md-3 col-lg-3 mb-4 card-filme">
+          <!-- Card do Filme -->
           <div class="card h-100 border-0 rounded-4 shadow">
             <a [routerLink]="['/filmes', filme.id]">
-              <img [src]="filme.urlImagem" class="card-img-top rounded-top-4">
+              <img [src]="filme.urlImagem"
+                   class="card-img-top rounded-top-4"
+                   [alt]="filme.nome">
             </a>
             <div class="card-body">
-              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-dark">
+              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-light">
                 <h6 class="card-title text-center">{{ filme.nome }}</h6>
               </a>
             </div>
@@ -32,7 +35,7 @@
     <!-- ========================================================== -->
     <!-- Só mostra esta seção se houver itens no histórico -->
     <div *ngIf="historicoParaExibir.length > 0" class="mb-5">
-      <h2>Assista Novamente</h2>
+      <h4>Assista Novamente</h4>
       <hr>
       <div class="row">
         <div *ngFor="let item of historicoParaExibir" class="col-md-3 col-lg-3 mb-4 card-filme">
@@ -42,7 +45,7 @@
             </a>
             <div class="card-body">
               <a [routerLink]="['/filmes', item.filme?.id]" class="text-decoration-none text-dark">
-                <h5 class="card-title text-center">{{ item.filme?.nome }}</h5>
+                <h6 class="card-title text-center">{{ item.filme?.nome }}</h6>
               </a>
             </div>
           </div>
