@@ -51,4 +51,8 @@ export class LoginService {
     };
   }
 
+  temAssinaturaAtiva() : boolean {
+    const dadosToken = this.extrairDadosToken();
+    return dadosToken ? dadosToken.assinaturaAtiva === true : false;
+  }
 }

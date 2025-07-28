@@ -31,7 +31,7 @@ export class FilmeComponent {
   constructor(
     private filmeService: FilmeService,
     private generoService: GeneroService,
-    private loginService: LoginService,
+    protected loginService: LoginService,
     private historicoService: HistoricoService,
     private router: Router,
     private route: ActivatedRoute)
@@ -88,9 +88,15 @@ export class FilmeComponent {
   }
 
   assistirTrailer() : void {
+    if (!this.loginService.temAssinaturaAtiva()) {
+      alert('Você precisa de uma assinatura ativa para assistir o trailer.');
+      this.router.navigate(['/planos']);
+      return;
+    }
+
     const dadosToken = this.loginService.extrairDadosToken();
     if (!dadosToken || !dadosToken.id) {
-      alert('Você precisa de uma assinatura ativa para assistir o trailer.');
+      alert('Ocorreu um erro com sua autenticação. Por favor, faça o login novamente.');
       this.router.navigate(['/login']);
       return;
     }

@@ -21,7 +21,10 @@
         <h4>Sinopse</h4>
         <p class="lead">{{ detalhesFilme.sinopse }}</p>
 
-        <button *ngIf="!playerVideo" class="btn btn-lg btn-danger" (click)="assistirTrailer()">
+        <button *ngIf="!playerVideo" class="btn btn-lg btn-danger"
+                (click)="assistirTrailer()"
+                [disabled]="!loginService.temAssinaturaAtiva()"
+                [title]="!loginService.temAssinaturaAtiva() ? 'Você precisa de uma assinatura para assistir' : 'Assistir ao trailer'">
           <i class="bi bi-play-fill"></i> Assistir Trailer
         </button>
       </div>
