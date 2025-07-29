@@ -24,6 +24,19 @@ export class AssinaturaService {
     }
   }
 
+  cancelar(assinatura: Assinatura): Observable<Assinatura>{
+    let assinaturaCancelada: Assinatura;
+    assinaturaCancelada = new Assinatura();
+    assinaturaCancelada.id = assinatura.id;
+    assinaturaCancelada.ativa = false;
+    assinaturaCancelada.dataInicio = assinatura.dataInicio;
+    assinaturaCancelada.dataFim = new Date();
+    assinaturaCancelada.idCliente = assinatura.idCliente;
+    assinaturaCancelada.idPlano = assinatura.idPlano;
+
+    return this.salvar(assinaturaCancelada);
+  }
+
   buscarPorId(id: number): Observable<Assinatura> {
     return this.http.get<Assinatura>(`${this.apiUrl}/${id}`, this.loginService.gerarCabecalhoHTTP());
   }

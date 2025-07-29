@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {Plano} from "../../models/plano";
 import {PlanoService} from "../../services/plano.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {AssinaturaService} from "../../services/assinatura.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-plano',
@@ -16,7 +18,11 @@ export class PlanoComponent {
   planos: Plano[] = [];
   isLoading = true;
 
-  constructor(private planoService: PlanoService, private router: Router) {
+  constructor(
+    private planoService: PlanoService,
+    private assinaturaService: AssinaturaService,
+    private loginService: LoginService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -38,7 +44,38 @@ export class PlanoComponent {
   }
 
   selecionarPlano(plano: Plano) {
-    alert(`Você selecionou o plano ${plano.descricao} por R$ ${plano.valor}!`);
-    this.router.navigate(['cadastro', plano.id!]);
+    const idCliente = this.loginService.extrairDadosToken()?.id;
+    const idPlano = plano.id;
+
+    if (!idCliente) {
+      localStorage.setItem('idPlanoEscolhido', idPlano!.toString());
+
+      alert('Para assinar, você precisa criar uma conta.');
+      this.router.navigate(['/cadastro']);
+      return;
+    } else { // usuário logado
+      // Cria o objeto de nova assinatura
+      const novaAssinatura = {
+        idPlano: idPlano,
+        idCliente: idCliente,
+        dataInicio: new Date(),
+        ativa: true
+      };
+
+      this.assinaturaService.salvar(novaAssinatura as any).subscribe({
+        next: () => {
+          this.loginService.sair(); // força o logout para limpar o token antigo com assinaturaAtiva = false
+          alert('Assinatura realizada com sucesso! Por favor, faça o login novamente para ativar seu plano e aproveitar nosso catálogo.');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('Erro ao criar assinatura:', err);
+          alert('Não foi possível processar sua assinatura. Tente novamente.');
+        }
+      });
+
+    }
+
+
   }
 }

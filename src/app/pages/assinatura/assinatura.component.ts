@@ -60,19 +60,6 @@ export class AssinaturaComponent {
           this.isLoading = false;
         }
       });
-      //
-      // this.assinaturaService.getByClienteId(clienteId).subscribe({
-      //   next: (dados) => {
-      //     this.assinaturas = dados.sort((a, b) =>
-      //       new Date(b.dataInicio).getTime() - new Date(a.dataInicio).getTime()
-      //     );
-      //     this.isLoading = false;
-      //   },
-      //   error: (err) => {
-      //     console.error('Erro ao carregar o histórico de assinaturas:', err);
-      //     this.isLoading = false;
-      //   }
-      // });
     } else {
       console.error('ID do cliente não encontrado.');
       this.isLoading = false;

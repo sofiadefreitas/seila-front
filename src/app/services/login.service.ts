@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable} from 'rxjs';
-import { appSettings } from '../app.config';
-import { Token } from '../models/token';
-import { jwtDecode } from 'jwt-decode';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {appSettings} from '../app.config';
+import {Token} from '../models/token';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,7 @@ export class LoginService {
     const token = this.obterToken();
     if (!token) return null;
     try {
-      const dadosToken = jwtDecode(token);
-      return dadosToken;
+      return jwtDecode(token);
     } catch (err) {
       return null;
     }

@@ -6,8 +6,10 @@ export class Assinatura {
   ativa!: boolean;
   dataInicio!: Date;
   dataFim?: Date;
-  cliente!: Cliente;
+  idCliente!: number;
+  cliente?: Cliente;
   idPlano!: number;
-  plano?: Plano;
+  plano?  : Plano;
+
 
 }
