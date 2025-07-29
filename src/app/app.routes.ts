@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import {ConsultarGeneroComponent} from "./pages/adm/consultar-genero/consultar-genero.component";
-import {CadastrarGeneroComponent} from "./pages/adm/cadastrar-genero/cadastrar-genero.component";
 import {HomeComponent} from "./pages/home/home.component";
 import {PlanoComponent} from "./pages/plano/plano.component";
 import {ClienteConsultaComponent} from "./pages/cliente-consulta/cliente-consulta.component";
@@ -17,8 +15,6 @@ import {AssinaturaGerenciarComponent} from "./pages/assinatura-gerenciar/assinat
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
-
-  { path: 'generos', component: ConsultarGeneroComponent},
 
   { path: 'planos', component: PlanoComponent},
 

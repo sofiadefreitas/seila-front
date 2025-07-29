@@ -1,92 +1,114 @@
 <div class="container mt-4">
-  <div *ngIf="isLoading" class="text-center">
+  <div *ngIf="isLoading" class="alert alert-info text-center">
     <strong>Carregando seus dados...</strong>
   </div>
 
-
   <!-- O container principal só aparece quando os dados chegam e o loading termina -->
   <div *ngIf="!isLoading && dadosConta as conta">
-    <h1>Minha Conta</h1>
-    <p>Olá, {{ conta.nome }}!</p>
-    <hr>
+    <div class="mb-2 msg-topo text-center">
+      <h1 class="display-6">Minha Conta</h1>
+    </div>
 
     <div class="row">
       <!-- Card: Dados Pessoais -->
-      <div class="col-md-12 mb-4">
-        <div class="card">
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
           <div class="card-header">
             <h4>Dados Pessoais</h4>
           </div>
           <div class="card-body">
             <p><strong>Nome:</strong> {{ conta.nome }}</p>
             <p><strong>Email:</strong> {{ conta.email }}</p>
+            <p><strong>Login:</strong> {{ conta.login }}</p>
             <p><strong>CPF:</strong> {{ conta.cpf }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <!-- Card: Minha Assinatura -->
-      <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-header">
-            <h4>Minha Assinatura</h4>
-          </div>
-          <div class="card-body">
-            <div *ngIf="conta.assinaturaAtiva; else semAssinatura">
-              <p><strong>Plano:</strong> {{ conta.assinaturaAtiva.plano?.descricao || 'Plano não informado' }}</p>
-              <p><strong>Data de Início:</strong> {{ conta.assinaturaAtiva.dataInicio | date: 'dd/MM/yyyy' }}</p>
-              <a routerLink="/assinatura-gerenciar" class="btn btn-success">Gerenciar Assinatura</a>
-            </div>
-
-            <ng-template #semAssinatura>
-              <div class="alert alert-info text-center">
-                Você ainda não possui uma assinatura ativa.
-                <br>
-                <a routerLink="/planos" class="alert-link">Que tal conhecer nossos planos?</a>
-              </div>
-            </ng-template>
-
-            <div class="text-center">
-              <a routerLink="/minha-conta/assinaturas" class="btn btn-secondary">Ver Histórico</a>
-            </div>
-
+            <h6><i class="bi bi-person-exclamation"></i> Entre em contato com o suporte para alterar dados.</h6>
           </div>
         </div>
       </div>
 
-      <!-- Card: Minhas Preferências-->
+      <!-- Coluna da direita -->
       <div class="col-md-6 mb-4">
-        <div class="card h-100">
-          <div class="card-header">
-            <h4>Minhas Preferências</h4>
-          </div>
-          <div class="card-body d-flex flex-column">
-            <div *ngIf="conta.perfisDeGenero.length > 0; else semPreferencias">
-              <p>Seus gêneros favoritos:</p>
-              <div>
-                <span *ngFor="let p of conta.perfisDeGenero" class="badge bg-info me-2 fs-6">
+        <div class="d-flex flex-column h-100">
+          <!-- Card: Minhas Preferências-->
+          <div class="card h-100 mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h4>Preferências</h4>
+
+
+              <!-- Botão de editar -->
+              <a routerLink="/perfil" class="badge bg-primary rounded-pill text-decoration-none" title="Editar Preferências">
+                Editar <i class="bi bi-pencil-square"></i>
+              </a>
+
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <div *ngIf="conta.perfisDeGenero.length > 0; else semPreferencias">
+                <div>
+                  <p>Seus gêneros favoritos definem as recomendações na sua página inicial.</p>
+                <span *ngFor="let p of conta.perfisDeGenero" class="badge bg-light text-dark me-2 mb-2 fs-6">
                   {{ p.descricaoDoGenero }}
                 </span>
+                </div>
               </div>
-            </div>
 
-            <ng-template #semPreferencias>
-              <div class="alert alert-light text-center">
-                Você ainda não definiu suas preferências de gêneros.
-              </div>
-            </ng-template>
-
-            <!-- Botão de redirecionamento para a página de perfil -->
-            <div class="mt-auto text-center">
-              <a routerLink="/perfil" class="btn btn-primary">Editar Preferências</a>
+              <ng-template #semPreferencias>
+                <div class=" p-3">
+                  <p class="">Você ainda não definiu seus gêneros favoritos.</p>
+                  <p class="">Clique em "Editar" para personalizar sua experiência.</p>
+                </div>
+              </ng-template>
             </div>
           </div>
+
+          <!-- Card:Assinatura -->
+          <div class="card h-100">
+
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h4>Minha Assinatura</h4>
+
+              <!-- Container para botões de links -->
+              <div>
+                <!-- Badge de Histórico -->
+                <a routerLink="/minha-conta/assinaturas"
+                   class="badge bg-secondary rounded-pill text-decoration-none me-2"
+                   title="Ver Histórico de Assinaturas">
+                  Histórico <i class="bi bi-clock-history"></i>
+                </a>
+
+                <!-- Badge de Gerenciar (só aparece se houver assinatura ativa) -->
+                <a *ngIf="conta.assinaturaAtiva"
+                   routerLink="/assinatura-gerenciar"
+                   class="badge bg-primary rounded-pill text-decoration-none"
+                   title="Gerenciar Assinatura">
+                  Gerenciar <i class="bi bi-gear-fill"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div *ngIf="conta.assinaturaAtiva; else semAssinatura">
+                <p >Seu plano atual: <strong>{{ conta.assinaturaAtiva.plano?.descricao || 'Plano não informado' }}</strong></p>
+                <p >Ativo desde: {{ conta.assinaturaAtiva.dataInicio | date:'dd/MM/yyyy' }}</p>
+              </div>
+
+              <ng-template #semAssinatura>
+                <div class="text-center p-3">
+                  <h5 class="text-white-50">Nenhuma assinatura ativa.</h5>
+                  <p>Assine um de nossos planos para ter acesso ilimitado ao nosso catálogo.</p>
+                  <a routerLink="/planos" class="btn btn-warning mt-2">Ver Planos</a>
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+
+
         </div>
       </div>
-    </div>
 
+    </div>
 
 
   </div>

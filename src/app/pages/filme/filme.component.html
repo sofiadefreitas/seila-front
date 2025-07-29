@@ -46,13 +46,16 @@
   </div>
 
   <ng-template #listaFilmes>
-    <div *ngFor="let genero of generos" class="mb-5">
+    <div class="mb-2 msg-topo">
+      <h1 class="display-6">Descubra todo o nosso catálogo!</h1>
+    </div>
 
-      <h4 class="text-white fw-bold">{{ genero.descricao }}</h4>
-      <hr>
-      <div *ngIf="genero.filmes" class="row">
+    <div *ngFor="let genero of generos" class="mb-2">
 
-        <div *ngFor="let filme of genero.filmes" class="col-md-3 col-lg-3 mb-4 card-filme">
+      <h4 class="mb-4 border-bottom pb-2">{{ genero.descricao }}</h4>
+      <div *ngIf="genero.filmes" class="row justify-content-center row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+
+        <div *ngFor="let filme of genero.filmes" class="col mb-2 card-filme">
           <!-- Card do Filme -->
           <div class="card h-100 border-0 rounded-4 shadow">
             <a [routerLink]="['/filmes', filme.id]">
@@ -60,8 +63,8 @@
                    class="card-img-top rounded-top-4"
                    [alt]="filme.nome">
             </a>
-            <div class="card-body">
-              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-light">
+            <div class="card-body mt-2">
+              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none">
                 <h6 class="card-title text-center">{{ filme.nome }}</h6>
               </a>
             </div>

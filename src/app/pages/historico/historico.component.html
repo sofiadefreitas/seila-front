@@ -1,25 +1,28 @@
 <div class="container mt-4">
-  <h2 class="mb-4">Meu Histórico de Filmes</h2>
+
+  <div class="mb-2 msg-topo text-center">
+    <h1 class="display-6">Histórico de Visualizações</h1>
+  </div>
 
   <div *ngIf="isLoading" class="alert alert-info text-center">
     Aguarde, carregando seu histórico...
   </div>
 
   <div *ngIf="!isLoading">
-    <table *ngIf="historico.length > 0; else historicoVazio" class="table table-bordered table-hover align-middle">
+    <table *ngIf="historico.length > 0; else historicoVazio" class="table table-dark tabela-seila align-middle">
       <thead class="table-dark">
       <tr>
         <th class="col-filme">Filme</th>
-        <th class="col-data" style="width: 25%;">Data da Visualização</th>
-        <th class="col-botao text-center" style="width: 15%;">Avaliar</th>
-        <th class="col-botao text-center" style="width: 15%;">Excluir</th>
+        <th class="col-data" style="width: 20%;">Data da Visualização</th>
+        <th class="col-botao text-center" style="width: 15%;">Avaliação <i class="bi bi-star"></i></th>
+        <th class="col-botao text-center" style="width: 20%;">Exclusão <i class="bi bi-trash"></i></th>
       </tr>
       </thead>
 
       <tbody>
       <tr *ngFor="let item of historico">
         <td>
-          <a [routerLink]="['/filmes', item.filme?.id]">
+          <a [routerLink]="['/filmes', item.filme?.id]" class="text-decoration-none">
             {{ item.filme?.nome || 'Detalhes do Filme' }}
           </a>
         </td>
@@ -29,15 +32,15 @@
         </td>
 
         <td class="text-center">
-          <a [routerLink]="['/avaliar', item.filme!.id]" class="btn btn-sm btn-info">
-            <i class="bi bi-star-fill"></i> Avaliar
+          <a [routerLink]="['/avaliar', item.filme!.id]" class="link-light">
+            Avaliar Filme
           </a>
         </td>
 
         <td class="text-center">
-          <button class="btn btn-sm btn-danger" (click)="removerDoHistorico(item.id!)">
-            <i class="bi bi-trash"></i> Remover do Meu Histórico
-          </button>
+          <a (click)="removerDoHistorico(item.id!)" class="link-light">
+            Remover do Histórico
+          </a>
         </td>
       </tr>
       </tbody>

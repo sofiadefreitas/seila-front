@@ -1,0 +1,30 @@
+/* Garante que o componente ocupe a tela toda */
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* centraliza o conteúdo */
+.cadastro-container {
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Limita a largura do formulário */
+.cadastro-form-wrapper {
+  max-width: 450px; /* Um pouco mais largo para acomodar mais campos */
+  width: 100%;
+}
+
+/* Estiliza as labels */
+.form-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  margin-left: 0.75rem;
+}
+
+/* Adiciona padding aos inputs */
+.form-control.rounded-pill {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}

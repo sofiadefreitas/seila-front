@@ -5,14 +5,28 @@
   </div>
 
   <div *ngIf="!isLoading">
+    <div class="mb-2 msg-topo">
+      <h1 class="display-6">É bom te ver de novo, {{ nomeUsuario }}!</h1>
+    </div>
+
+    <!-- Este bloco só aparece se a lista de gêneros preferidos estiver vazia -->
+    <div *ngIf="generosPreferidosComFilmes.length === 0" class="text-center p-5 bg-light rounded-3 mb-2">
+      <i class="bi bi-stars" style="font-size: 3rem; color: var(--bs-primary);"></i>
+      <h4 class="mt-3">Personalize sua Experiência</h4>
+      <p class="lead text-muted">Ainda não sabemos do que você gosta!</p>
+      <p>Clique no botão abaixo para nos contar seus gêneros favoritos e receber recomendações feitas para você na página inicial.</p>
+      <a routerLink="/perfil" class="btn btn-primary btn-lg mt-2">
+        Definir Minhas Preferências
+      </a>
+    </div>
+
     <!-- ========================================================== -->
     <!--      SEÇÃO DOS GÊNEROS PREFERIDOS                      -->
     <!-- ========================================================== -->
-    <div *ngFor="let genero of generosPreferidosComFilmes" class="mb-5">
-      <h4>{{ genero.descricao }}</h4>
-      <hr>
-      <div *ngIf="genero.filmes" class="row">
-        <div *ngFor="let filme of genero.filmes" class="col-md-3 col-lg-3 mb-4 card-filme">
+    <div *ngFor="let genero of generosPreferidosComFilmes" class="mb-2">
+      <h4 class="mb-4 border-bottom pb-2">{{ genero.descricao }}</h4>
+      <div *ngIf="genero.filmes" class="row justify-content-center row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+        <div *ngFor="let filme of genero.filmes" class="col mb-2 card-filme">
           <!-- Card do Filme -->
           <div class="card h-100 border-0 rounded-4 shadow">
             <a [routerLink]="['/filmes', filme.id]">
@@ -20,8 +34,8 @@
                    class="card-img-top rounded-top-4"
                    [alt]="filme.nome">
             </a>
-            <div class="card-body">
-              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none text-light">
+            <div class="card-body mt-2">
+              <a [routerLink]="['/filmes', filme.id]" class="text-decoration-none">
                 <h6 class="card-title text-center">{{ filme.nome }}</h6>
               </a>
             </div>
@@ -34,17 +48,16 @@
     <!--      SEÇÃO "ASSISTA NOVAMENTE"                         -->
     <!-- ========================================================== -->
     <!-- Só mostra esta seção se houver itens no histórico -->
-    <div *ngIf="historicoParaExibir.length > 0" class="mb-5">
-      <h4>Assista Novamente</h4>
-      <hr>
-      <div class="row">
-        <div *ngFor="let item of historicoParaExibir" class="col-md-3 col-lg-3 mb-4 card-filme">
+    <div *ngIf="historicoParaExibir.length > 0" class="mb-2">
+      <h4 class="mb-4 border-bottom pb-2">Assista Novamente</h4>
+      <div class="row g-3">
+        <div *ngFor="let item of historicoParaExibir" class="col-6 col-md-3 col-lg-2 mb-2 card-filme">
           <div class="card h-100 border-0 rounded-4 shadow">
             <a [routerLink]="['/filmes', item.filme?.id]">
               <img [src]="item.filme?.urlImagem" class="card-img-top rounded-top-4">
             </a>
-            <div class="card-body">
-              <a [routerLink]="['/filmes', item.filme?.id]" class="text-decoration-none text-dark">
+            <div class="card-body mt-2">
+              <a [routerLink]="['/filmes', item.filme?.id]" class="text-decoration-none">
                 <h6 class="card-title text-center">{{ item.filme?.nome }}</h6>
               </a>
             </div>

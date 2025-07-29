@@ -28,6 +28,7 @@ export class HomeComponent {
   generosPreferidosComFilmes: Genero[] = [];
   historicoParaExibir: Historico[] = [];
   isLoading = true;
+  nomeUsuario: string = '';
 
   constructor(
     private perfilService: PerfilService,
@@ -48,6 +49,7 @@ export class HomeComponent {
     }
 
     const idCliente = dadosToken.id;
+    this.nomeUsuario = dadosToken.sub;
     this.carregarConteudoPersonalizado(idCliente);
   }
 

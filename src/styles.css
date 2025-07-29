@@ -1,6 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
 body {
   background-color: #0e1a4b;
+  color: aliceblue;
 }
 
 h2 {
@@ -8,23 +8,64 @@ h2 {
   margin-bottom: 10px;
 }
 
-* {
+a {
   color: aliceblue;
 }
 
 .card{
-  background-color: #0e1a4b;
+  background-color: #122263 !important;
   color: aliceblue;
   border-color: aliceblue;
 }
 
+.card .card-header {
+  padding-bottom: 0;
+}
+
+.card .card-body {
+  padding-top: 0;
+}
+
 .card-filme {
   max-width: 180px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .card-filme .card-img {
   height: 270px;
   object-fit: cover;
 }
+
+.msg-topo .display-5 {
+  font-size: 2rem;
+}
+
+.tabela-seila{
+  --bs-table-bg: transparent; /* Remove o fundo cinza escuro padrão para usar o seu fundo global */
+  --bs-table-striped-bg: transparent; /* Remove o fundo de linhas alternadas se houver */
+  border-collapse: collapse; /* Garante que as bordas sejam linhas únicas */
+}
+
+.tabela-seila thead th {
+  border: none;
+  --bs-table-bg: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25); /* Linha branca sutil */
+}
+
+.tabela-seila tbody td {
+  border: none;
+}
+
+.tabela-seila tbody tr:not(:first-child) td {/* Adiciona a linha branca fina APENAS ACIMA de cada linha do corpo da tabela, exceto a primeira, para criar o efeito de separação da imagem.*/
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.lista-seila .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: inherit; /* Herda a cor do texto do seu tema escuro global */
+}
+
+.lista-seila .list-group-item:not(:first-child) {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+

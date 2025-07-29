@@ -1,10 +1,54 @@
-<h1>Cadastrar cliente</h1>
+<div class="cadastro-container d-flex align-items-center justify-content-center">
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <label>Nome: <input formControlName="nome"></label> <br>
-  <label>CPF: <input formControlName="cpf"></label> <br>
-  <label>E-mail: <input formControlName="email"></label> <br>
-  <label>Login: <input formControlName="login"></label> <br>
-  <label>Senha: <input type="password" formControlName="senha"></label> <br>
-  <button type="submit" [disabled]="form.invalid">Cadastrar</button>
-</form>
+
+  <div class="cadastro-form-wrapper"> <!-- O wrapper limita a largura do formulário -->
+
+    <!-- Cabeçalho da Página -->
+    <div class="mb-2 msg-topo text-center">
+      <h1 class="display-6">Cadastre-se</h1>
+    </div>
+
+    <!-- Formulário de Cadastro -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Campo Nome -->
+      <div class="form-group mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input id="nome" type="text" class="form-control rounded-pill" formControlName="nome">
+      </div>
+
+      <!-- Campo CPF -->
+      <div class="form-group mb-3">
+        <label for="cpf" class="form-label">CPF</label>
+        <input id="cpf" type="text" class="form-control rounded-pill" formControlName="cpf">
+      </div>
+
+      <!-- Campo E-mail -->
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input id="email" type="email" class="form-control rounded-pill" formControlName="email">
+      </div>
+
+      <!-- Campo Login -->
+      <div class="form-group mb-3">
+        <label for="login" class="form-label">Login</label>
+        <input id="login" type="text" class="form-control rounded-pill" formControlName="login">
+      </div>
+
+      <!-- Campo Senha -->
+      <div class="form-group mb-4">
+        <label for="senha" class="form-label">Senha</label>
+        <input id="senha" type="password" class="form-control rounded-pill" formControlName="senha">
+      </div>
+
+      <!-- Botão Cadastrar -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary rounded-pill btn-lg" [disabled]="form.invalid">
+          Cadastrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

@@ -1,35 +1,42 @@
 <div class="container mt-4">
-  <h1>Minhas Avaliações</h1>
-  <p>Aqui está o histórico das avaliações que você já fez.</p>
-  <hr>
 
-  <div *ngIf="isLoading" class="text-center">
-    <strong>Carregando suas avaliações...</strong>
+  <div class="mb-2 msg-topo text-center">
+    <h1 class="display-6">Histórico de Avaliações</h1>
   </div>
 
-  <div *ngIf="!isLoading" class="card bg-dark mb-3">
+  <div *ngIf="isLoading" class="alert alert-info text-center">
+    <strong>Carregando avaliações...</strong>
+  </div>
+
+  <div *ngIf="!isLoading" class="card">
     <div *ngIf="avaliacoes.length === 0" class="alert alert-info text-center">
       Você ainda não fez nenhuma avaliação.
     </div>
 
 
-    <ul class="list-group">
-      <li *ngFor="let avaliacao of avaliacoes" class="list-group-item d-flex justify-content-between align-items-center bg-dark">
+    <ul class="list-group lista-seila">
+      <li *ngFor="let avaliacao of avaliacoes" class="list-group-item d-flex justify-content-between align-items-center">
         <div >
           <h5 class="mb-1">
-            <a [routerLink]="['/filmes', avaliacao.filme?.id]">
+            <a [routerLink]="['/filmes', avaliacao.filme?.id]" class="text-decoration-none link-light">
               {{ avaliacao.filme?.nome}}
             </a>
           </h5>
-          <p class="mb-1">{{ avaliacao.comentario }}</p>
+
+          <div class="d-flex align-items-center mb-1">
+            <span class="badge bg-primary rounded-pill fs-6 me-2">{{ avaliacao.nota }} ★</span>
+
+            <span>{{ avaliacao.comentario }}</span>
+          </div>
+
           <small>Avaliado em: {{ avaliacao.data | date: 'dd/MM/yyyy' }}</small>
+
         </div>
 
         <div class="d-flex align-items-center">
-          <span class="badge bg-primary rounded-pill fs-6">{{ avaliacao.nota }} ★</span>
-          <button class="btn btn-outline-danger" (click)="removerAvaliacao(avaliacao.id!)" title="Remover esta avaliação">
-            <i class="bi bi-trash"></i>
-          </button>
+          <a (click)="removerAvaliacao(avaliacao.id!)" class="badge bg-danger rounded-pill text-decoration-none" style="cursor: pointer;" title="Remover esta avaliação">
+            Remover <i class="bi bi-trash"></i>
+          </a>
         </div>
 
       </li>

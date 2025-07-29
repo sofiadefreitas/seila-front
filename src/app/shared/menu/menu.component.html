@@ -22,10 +22,6 @@
         <ng-container *ngIf="nomeUsuario">
 
           <li class="nav-item">
-            <span class="navbar-text">Olá, {{ nomeUsuario }}</span>
-          </li>
-
-          <li class="nav-item">
             <!-- Usamos uma tag <a> para manter o estilo, mas com um evento (click) em vez de um link de rota -->
             <a class="nav-link" style="cursor: pointer;" (click)="sair()">Sair</a>
           </li>

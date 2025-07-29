@@ -1,13 +1,15 @@
 
 <div class="container mt-4">
-  <h2 class="mb-4">Histórico de Assinaturas</h2>
+  <div class="mb-2 msg-topo text-center">
+    <h1 class="display-6">Histórico de Assinaturas</h1>
+  </div>
 
   <div *ngIf="isLoading" class="alert alert-info text-center">
     Carregando...
   </div>
 
   <div *ngIf="!isLoading">
-    <table *ngIf="assinaturas.length > 0; else semHistorico" class="table table-hover align-middle">
+    <table *ngIf="assinaturas.length > 0; else semHistorico" class="table table-dark tabela-seila align-middle">
       <thead class="table-dark">
       <tr>
         <th>Plano</th>
