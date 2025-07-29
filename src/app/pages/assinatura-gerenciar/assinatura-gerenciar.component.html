@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading" class="text-center"><strong>Carregando...</strong></div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="assinaturaAtiva; else semAssinatura">
+      <h2 class="mb-4">Gerenciar Minha Assinatura</h2>
+
+      <!-- Card do Plano Atual -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4>Seu Plano Atual</h4>
+        </div>
+        <div class="card-body">
+          <h3>{{ assinaturaAtiva.plano?.descricao }}</h3>
+          <p class="lead">R$ {{ assinaturaAtiva.plano?.valor | number:'1.2-2' }} /mês</p>
+          <p>Assinatura ativa desde: {{ assinaturaAtiva.dataInicio | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+
+      <!-- Card para Trocar de Plano -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4>Trocar de Plano</h4>
+        </div>
+        <div class="card-body">
+          <p>Selecione um novo plano da lista abaixo.</p>
+          <div class="input-group">
+            <select class="form-select" [(ngModel)]="idNovoPlano">
+              <option [ngValue]="undefined" disabled>Escolha um plano...</option>
+              <option *ngFor="let plano of outrosPlanos" [value]="plano.id">
+                {{ plano.descricao }} (R$ {{ plano.valor | number:'1.2-2' }}/mês)
+              </option>
+            </select>
+            <button class="btn btn-primary" (click)="trocarPlano()" [disabled]="!idNovoPlano">
+              Confirmar Troca
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card para Cancelar Assinatura -->
+      <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+          <h4>Cancelar Assinatura</h4>
+        </div>
+        <div class="card-body">
+          <p>Se você cancelar, seu acesso continuará até o final do ciclo de pagamento atual.</p>
+          <button class="btn btn-danger" (click)="cancelar()">
+            Cancelar Minha Assinatura
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #semAssinatura>
+      <div class="alert alert-warning text-center">
+        Você não possui uma assinatura ativa para gerenciar.
+        <a routerLink="/planos" class="alert-link">Ver nossos planos.</a>
+      </div>
+    </ng-template>
+  </div>
+</div>

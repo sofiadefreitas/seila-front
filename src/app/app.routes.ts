@@ -13,6 +13,7 @@ import {HistoricoComponent} from "./pages/historico/historico.component";
 import {AssinaturaComponent} from "./pages/assinatura/assinatura.component";
 import {AvaliacaoCadastroComponent} from "./pages/avaliacao-cadastro/avaliacao-cadastro.component";
 import {PerfilComponent} from "./pages/perfil/perfil.component";
+import {AssinaturaGerenciarComponent} from "./pages/assinatura-gerenciar/assinatura-gerenciar.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -40,6 +41,8 @@ export const routes: Routes = [
   { path: 'avaliar/:idFilme', component: AvaliacaoCadastroComponent},
 
   { path: 'minha-conta/assinaturas', component: AssinaturaComponent},
+
+  { path: 'assinatura-gerenciar', component: AssinaturaGerenciarComponent},
 
   { path: 'perfil', component: PerfilComponent}
 
