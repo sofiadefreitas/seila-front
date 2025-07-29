@@ -37,7 +37,7 @@
             <div *ngIf="conta.assinaturaAtiva; else semAssinatura">
               <p><strong>Plano:</strong> {{ conta.assinaturaAtiva.plano?.descricao || 'Plano não informado' }}</p>
               <p><strong>Data de Início:</strong> {{ conta.assinaturaAtiva.dataInicio | date: 'dd/MM/yyyy' }}</p>
-              <a href="#" class="btn btn-success">Gerenciar Assinatura</a>
+              <a routerLink="/assinatura-gerenciar" class="btn btn-success">Gerenciar Assinatura</a>
             </div>
 
             <ng-template #semAssinatura>
