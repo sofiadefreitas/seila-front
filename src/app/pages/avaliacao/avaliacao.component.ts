@@ -65,6 +65,24 @@ export class AvaliacaoComponent {
     }
   }
 
+  removerAvaliacao(idAvaliacao: number): void {
+    if (confirm('Tem certeza que deseja apagar esta avaliação? Esta ação não pode ser desfeita.')) {
+
+      this.avaliacaoService.excluir(idAvaliacao).subscribe({
+        next: () => {
+          // 'filter' cria um novo array com todos os itens, exceto o removido.
+          this.avaliacoes = this.avaliacoes.filter(a => a.id !== idAvaliacao);
+
+          alert('Avaliação removida com sucesso.');
+        },
+        error: (err) => {
+          console.error('Erro ao remover avaliação:', err);
+          alert('Não foi possível remover a avaliação. Tente novamente mais tarde.');
+        }
+      });
+    }
+  }
+
   private addFilmesNasAvaliacoes(avaliacoes: Avaliacao[], filmes: Filme[]): Avaliacao[] {
     const mapaDeFilmes = new Map<number, Filme>(filmes.map(f => [f.id!, f])); // Mapa de filmes para busca rápida (evita muitas consultas à API)
 
