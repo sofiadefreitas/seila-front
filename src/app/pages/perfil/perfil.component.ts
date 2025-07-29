@@ -78,37 +78,66 @@ export class PerfilComponent {
       return;
     }
 
-    const chamadasDeApi: Observable<any>[] = [];
 
+    const perfisParaSalvar: Perfil[] = [];
     this.todosOsGeneros.forEach((genero, i) => {
       const gosta = formValues[i];
-      const perfilExistente = this.perfisSalvos.find(p => p.idGenero === genero.id);
-
-      const perfilParaSalvar: Perfil = {
-        id: perfilExistente?.id,
-        idGenero: genero.id!,
-        idCliente: idCliente,
-        gostaDoGenero: gosta
-      };
-      chamadasDeApi.push(this.perfilService.salvarPerfis(perfilParaSalvar));
-
+      if (gosta) {
+        perfisParaSalvar.push({
+          idGenero: genero.id!,
+          idCliente: idCliente,
+          gostaDoGenero: gosta
+        });
+      }
     });
 
-    if (chamadasDeApi.length === 0) {
-      alert('Preferências salvas (nenhuma alteração necessária).');
-      return;
-    }
-
-    forkJoin(chamadasDeApi).subscribe({
+    this.perfilService.salvarPerfis(perfisParaSalvar).subscribe({
       next: () => {
-        alert('Todas as suas preferências foram salvas com sucesso!');
+        alert('Preferências salvas com sucesso!');
         this.ngOnInit();
       },
       error: (err) => {
-        console.error('Ocorreu um erro ao salvar uma ou mais preferências:', err);
-        alert('Não foi possível salvar todas as suas preferências. Tente novamente.');
+        console.error('Ocorreu um erro ao salvar as preferências:', err);
+        if (err.status === 403) {
+          alert('Você não tem permissão para realizar esta ação. Verifique a configuração de segurança do back-end.');
+        } else {
+          alert('Não foi possível salvar suas preferências. Tente novamente.');
+        }
       }
     });
-    }
 
+
+    // const chamadasDeApi: Observable<any>[] = [];
+    //
+    // this.todosOsGeneros.forEach((genero, i) => {
+    //   const gosta = formValues[i];
+    //   const perfilExistente = this.perfisSalvos.find(p => p.idGenero === genero.id);
+    //
+    //   const perfilParaSalvar: Perfil = {
+    //     id: perfilExistente?.id,
+    //     idGenero: genero.id!,
+    //     idCliente: idCliente,
+    //     gostaDoGenero: gosta
+    //   };
+    //   chamadasDeApi.push(this.perfilService.salvarPerfis(perfilParaSalvar));
+    //
+    // });
+    //
+    // if (chamadasDeApi.length === 0) {
+    //   alert('Preferências salvas (nenhuma alteração necessária).');
+    //   return;
+    // }
+    //
+    // forkJoin(chamadasDeApi).subscribe({
+    //   next: () => {
+    //     alert('Todas as suas preferências foram salvas com sucesso!');
+    //     this.ngOnInit();
+    //   },
+    //   error: (err) => {
+    //     console.error('Ocorreu um erro ao salvar uma ou mais preferências:', err);
+    //     alert('Não foi possível salvar todas as suas preferências. Tente novamente.');
+    //   }
+    // });
+    // }
+  }
 }

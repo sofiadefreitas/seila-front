@@ -26,13 +26,13 @@ export class PerfilService {
       return this.http.get<Perfil[]>(`${this.apiUrl}/cliente/${idCliente}`)
   }
 
-  salvarPerfis(perfil: Perfil) : Observable<any> {
+  salvarPerfis(perfis: Perfil[]) : Observable<any> {
     const idCliente = this.loginService.extrairDadosToken()?.id;
 
     if (!idCliente) {
       throw new Error('ID do cliente não encontrado no token');
     } else {
-      return this.http.post(this.apiUrl, perfil, this.loginService.gerarCabecalhoHTTP());
+      return this.http.put(`${this.apiUrl}/cliente/${idCliente}`, perfis, this.loginService.gerarCabecalhoHTTP());
     }
 
   }
