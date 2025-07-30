@@ -3,12 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {LoginService} from "./login.service";
 import {Observable} from "rxjs";
 import {Assinatura} from "../models/assinatura";
+import {appSettings} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssinaturaService {
-  private apiUrl = 'http://localhost:8080/assinaturas';
+  private apiUrl = `${appSettings.apiBaseUrl}/assinaturas`;
 
   constructor(private http: HttpClient, private loginService: LoginService) { }
 

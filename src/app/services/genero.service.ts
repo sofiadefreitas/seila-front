@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Genero} from "../models/genero";
+import {appSettings} from "../app.config";
 
 
 
@@ -10,7 +11,7 @@ import {Genero} from "../models/genero";
 })
 export class GeneroService {
 
-  private apiUrl = 'http://localhost:8080/generos';
+  private apiUrl = `${appSettings.apiBaseUrl}/generos`;
 
   constructor(private http: HttpClient) { }
 

@@ -4,13 +4,14 @@ import {HttpClient} from "@angular/common/http";
 import {LoginService} from "./login.service";
 import {Avaliacao} from "../models/avaliacao";
 import {Assinatura} from "../models/assinatura";
+import {appSettings} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvaliacaoService {
 
-  private apiUrl = 'http://localhost:8080/avaliacoes';
+  private apiUrl = `${appSettings.apiBaseUrl}/avaliacoes`;
 
   constructor(private http: HttpClient, private loginService: LoginService) { }
 

@@ -4,13 +4,14 @@ import {Observable} from "rxjs";
 import {Filme} from "../models/filme";
 import {FilmeGenero} from "../models/filme-genero";
 import {Genero} from "../models/genero";
+import {appSettings} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmeService {
-  private apiUrl = 'http://localhost:8080/filmes';
-  private apiGeneros = 'http://localhost:8080/generos'
+  private apiUrl = `${appSettings.apiBaseUrl}/filmes`;
+  private apiGeneros = `${appSettings.apiBaseUrl}/generos`;
 
   constructor(private http: HttpClient) { }
 

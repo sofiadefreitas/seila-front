@@ -4,13 +4,14 @@ import {Observable} from "rxjs";
 import {Plano} from "../models/plano";
 import {Cliente} from "../models/cliente";
 import {Genero} from "../models/genero";
+import {appSettings} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  private apiUrl = 'http://localhost:8080/clientes';
+  private apiUrl = `${appSettings.apiBaseUrl}/clientes`;
 
   constructor(private http: HttpClient) { }
 

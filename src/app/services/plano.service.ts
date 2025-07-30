@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Plano} from "../models/plano"
+import {appSettings} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanoService {
 
-  private apiUrl = 'http://localhost:8080/planos';
+  private apiUrl = `${appSettings.apiBaseUrl}/planos`;
 
   constructor(private http: HttpClient) { }
 
