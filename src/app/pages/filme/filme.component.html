@@ -1,19 +1,24 @@
 <div class="container mt-4">
 
+
   <div *ngIf="detalhesFilme; else listaFilmes">
     <div class="row">
       <!-- Coluna da Imagem -->
-      <div class="col-md-4">
+      <div class="col-md-3">
         <img [src]="detalhesFilme.urlImagem" class="img-fluid rounded shadow-sm" [alt]="detalhesFilme.nome">
       </div>
 
       <!-- Coluna dos Detalhes -->
-      <div class="col-md-8">
-        <h1>{{ detalhesFilme.nome }}</h1>
+      <div class="col-md-9">
+<!--        <h1>{{ detalhesFilme.nome }}</h1>-->
+
+        <div class="">
+          <h1 class="display-5">{{ detalhesFilme.nome }}</h1>
+        </div>
 
         <!-- Gêneros do Filme -->
         <div class="mb-3">
-          <span *ngFor="let genero of detalhesFilme.generos" class="badge bg-secondary me-2 fs-6">
+          <span *ngFor="let genero of detalhesFilme.generos" class="badge bg-secondary me-2 fs-5">
             {{ genero.descricao }}
           </span>
         </div>
@@ -30,8 +35,9 @@
       </div>
     </div>
 
-    <div *ngIf="urlVideo && playerVideo" class="mb-4">
-      <div class="ratio ratio-16x9">
+    <div *ngIf="urlVideo && playerVideo" class="my-4">
+      <hr>
+      <div class="ratio ratio-16x9 mt-4">
         <iframe
           [src]="urlVideo | safeUrl"
           title="Player do Trailer"

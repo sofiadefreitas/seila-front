@@ -1,25 +1,44 @@
 <div class="container mt-4">
-  <h2>Minhas Preferências de Gênero</h2>
-  <p>Selecione seus gêneros favoritos para receber recomendações personalizadas na página inicial.</p>
-  <p><b>IMPORTANTE:</b> um gênero que não for selecionado <b>NÃO</b> aparecerá na sua página inicial e nem nas suas recomendações.</p>
-  <hr>
+
+  <!-- Cabeçalho da Página -->
+  <div class="text-center mb-5">
+    <h1 class="display-5">Minhas Preferências</h1>
+  </div>
+
+
+<!--  <h2>Minhas Preferências de Gênero</h2>-->
+<!--  <p>Selecione seus gêneros favoritos para receber recomendações personalizadas na página inicial.</p>-->
+<!--  <p><b>IMPORTANTE:</b> um gênero que não for selecionado <b>NÃO</b> aparecerá na sua página inicial e nem nas suas recomendações.</p>-->
+<!--  <hr>-->
 
   <div *ngIf="isLoading" class="text-center">
     <strong>Carregando...</strong>
   </div>
 
   <form *ngIf="!isLoading" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div formArrayName="perfis">
-      <div *ngFor="let genero of todosOsGeneros; let i = index" class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="'genero-' + i">
-        <label class="form-check-label" [for]="'genero-' + i">
-          {{ genero.descricao }}
-        </label>
-      </div>
-    </div>
+    <div class="row justify-content-center">
+      <div class="col-6">
 
-    <div class="mt-4">
-      <button type="submit" class="btn btn-primary">Salvar Preferências</button>
+        <p><b>IMPORTANTE:</b> um gênero que não for selecionado <b>NÃO</b> aparecerá na sua página inicial e nem nas suas recomendações.</p>
+
+        <div formArrayName="perfis">
+          <div class="card">
+            <div *ngFor="let genero of todosOsGeneros; let i = index"
+                 class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3">
+              <label class="form-check-label" [for]="'genero-' + i">
+                <span class="fs-5">{{ todosOsGeneros[i].descricao }}</span>
+              </label>
+              <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="'genero-' + i">
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Botão Salvar -->
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary btn-lg">Salvar Preferências</button>
+        </div>
+      </div>
     </div>
   </form>
 </div>
